@@ -1,0 +1,184 @@
+body {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 10px 20px;
+  position: relative;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 300;
+}
+
+.from-block,
+.to-block {
+  padding: 30px 20px;
+  position: relative;
+}
+
+.to-block {
+  background-color: #FAFAFA;
+}
+
+.input input,
+.output,
+.currency {
+  color: #222;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: .8px;
+}
+
+.input input {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  text-align: right;
+  width: auto;
+}
+
+.input,
+.output {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+}
+
+.currency {
+  cursor: pointer;
+  position: relative;
+}
+
+.currency::after {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+  position: relative;
+  left: 10px;
+  top: 18px;
+}
+
+.balance {
+  color: #999;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: .5px;
+  margin-top: 10px;
+}
+
+.balance.warning {
+  color: #f3007d;
+}
+
+.rate-container {
+  left: 0;
+  position: absolute;
+  top: -14px;
+  width: 100%;
+}
+
+.rate {
+  background-color: #FFF;
+  border: 2px solid #FAFAFA;
+  border-radius: 20px;
+  color: #2445f6;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .6px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 4px 8px;
+  width: 100px;
+}
+
+.rate div {
+  display: inline-block;
+}
+
+.rate span {
+  font-size: 12px;
+}
+
+.exchange-container {
+  text-align: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.exchange-btn {
+  background-color: #f3007d;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 10px;
+  width: 60%;
+  -webkit-box-shadow: 0px 5px 10px #f6c2d9;
+  -moz-box-shadow:    0px 5px 10px #f6c2d9;
+  box-shadow:         0px 5px 10px #f6c2d9;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.exchange-btn:hover {
+  background-color: #df0374;
+}
+
+.exchange-btn[disabled] {
+  background-color: #f6bde8;
+  cursor: not-allowed;
+  -webkit-box-shadow: none;
+  -moz-box-shadow:    none;
+  box-shadow:         none; 
+}
+
+.dropdown {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+.dropdown ul {
+  background-color: #FFFF;
+  border: 1px solid #CCC;
+  font-size: 14px;
+  list-style: none;
+  margin: 20px auto;
+  padding: 0;
+  width: 40%;
+}
+
+.dropdown ul p {
+  margin: 0;
+  padding: 6px 20px;
+}
+
+.dropdown ul li {
+  padding: 10px 30px;
+  border-top: 1px solid #DDD;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
+.dropdown ul li:hover {
+  background-color: #EEE;
+}

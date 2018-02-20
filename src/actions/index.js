@@ -19,7 +19,7 @@ const receive = (type, data, state = {}) => {
       const x = ((data.rates[name]) + Math.random()/30).toFixed(6)
       const rates = ({ ...data.rates, [name]: Number(x) })
 
-      // [!] replace 3 lines above with line below to fake-update
+      // [!] replace 3 lines above with line below to disable fake-update
       // const rates = data.rates
 
       return {

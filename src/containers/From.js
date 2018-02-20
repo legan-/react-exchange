@@ -75,6 +75,9 @@ From.propTypes = {
   currentInput:     PropTypes.number.isRequired
 }
 
+// add From.defaultProps
+// https://github.com/facebook/react/issues/3725
+
 const mapStateToProps = state => ({
   currency:         getCurrency(state.currencies.list, state.currencies.from),
   currenciesList:   getCurrenciesList(state.currencies.list),

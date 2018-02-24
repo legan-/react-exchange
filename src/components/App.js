@@ -1,8 +1,8 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 
-import From from '../containers/From'
-import To from '../containers/To'
+import From from '../containers/From';
+import To from '../containers/To';
 
 
 const App = () => (
@@ -15,6 +15,6 @@ const App = () => (
       <To />
     </div>
   </div>
-)
+);
 
-export default connect()(App)
+export default connect()(App);

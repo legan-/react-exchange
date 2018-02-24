@@ -1,8 +1,9 @@
-import _settings from './user_currencies.json'
+import _settings from './user_currencies.json';
 
-const TIMEOUT = 200
+
+const TIMEOUT = 200;
 
 export default {
 	getData: 	(d, timeout) => setTimeout(() => d(_settings), timeout || TIMEOUT),
-	exchange: (payload, d, timeout) => setTimeout(() => d(), timeout || TIMEOUT)
+	exchange: (payload, d, timeout) => setTimeout(() => d(true), timeout || TIMEOUT)
 }

@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 
 const DropdownElement = ({ name, value, onCurrencyClicked }) => (
@@ -11,7 +11,7 @@ const DropdownElement = ({ name, value, onCurrencyClicked }) => (
       { name } - { value }
     </li>
   </div>
-)
+);
 
 DropdownElement.propTypes = {
   name:              PropTypes.string.isRequired,
@@ -19,4 +19,4 @@ DropdownElement.propTypes = {
   onCurrencyClicked: PropTypes.func.isRequired,
 }
 
-export default DropdownElement
+export default DropdownElement;

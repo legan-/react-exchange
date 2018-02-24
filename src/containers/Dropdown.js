@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import DropdownElement from '../components/DropdownElement'
+import DropdownElement from '../components/DropdownElement';
 
-import { switchCurrency } from '../actions'
+import { switchCurrency } from '../actions';
 
 
 const Dropdown = ({ list, active, type, switchCurrency }) => {
-  let ul
+  let ul;
 
   if (active) {
     ul = (
@@ -25,7 +25,7 @@ const Dropdown = ({ list, active, type, switchCurrency }) => {
           />
         ) }
       </ul>
-    )
+    );
   }
   return (
     <div
@@ -33,7 +33,7 @@ const Dropdown = ({ list, active, type, switchCurrency }) => {
     >
       { ul }
     </div>
-  )
+  );
 }
 
 Dropdown.propTypes = {
@@ -48,9 +48,9 @@ Dropdown.propTypes = {
   switchCurrency: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
   { switchCurrency }
-)(Dropdown)
+)(Dropdown);

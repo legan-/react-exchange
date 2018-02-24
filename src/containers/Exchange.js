@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import { getCurrency } from '../reducers/currencies'
-import { exchange } from '../actions'
+import { getCurrency } from '../reducers/currencies';
+import { exchange } from '../actions';
 
 
 const Exchange = ({ inputValue, balance, exchange }) => (
@@ -19,7 +19,7 @@ const Exchange = ({ inputValue, balance, exchange }) => (
       Exchange
     </button>
   </div>
-)
+);
 
 Exchange.propTypes = {
   inputValue: PropTypes.number.isRequired,
@@ -30,9 +30,9 @@ Exchange.propTypes = {
 const mapStateToProps = state => ({
   inputValue: state.currencies.input,
   balance:    getCurrency(state.currencies.list, state.currencies.from).value || 0
-})
+});
 
 export default connect(
   mapStateToProps,
   { exchange }
-)(Exchange)
+)(Exchange);

@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 
 const Currency = ({ name, sign, value, warning, onCurrencyClicked }) => {
-  const x = warning ? 'balance warning' : 'balance'
+  const x = warning ? 'balance warning' : 'balance';
 
   return (
     <div > 
@@ -19,7 +19,7 @@ const Currency = ({ name, sign, value, warning, onCurrencyClicked }) => {
         Balance: { sign }{ value }
       </div>
     </div>
-  )
+  );
 }
 
 Currency.propTypes = {
@@ -30,4 +30,4 @@ Currency.propTypes = {
   onCurrencyClicked: PropTypes.func.isRequired
 }
 
-export default Currency
+export default Currency;

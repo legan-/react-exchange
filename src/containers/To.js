@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { TO } from '../constants/DataTypes'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { TO } from '../constants/DataTypes';
 
-import Currency from '../components/Currency'
-import Rate from './Rate'
-import Dropdown from './Dropdown'
-import Exchange from './Exchange'
+import Currency from '../components/Currency';
+import Rate from './Rate';
+import Dropdown from './Dropdown';
+import Exchange from './Exchange';
 
-import { toggleDropdown } from '../actions'
-import { getCurrency, getCurrenciesList } from '../reducers/currencies'
+import { toggleDropdown } from '../actions';
+import { getCurrency, getCurrenciesList } from '../reducers/currencies';
 
 
 const To = ({ currency, currenciesList, output, toggleDropdown, isDropdownActive }) => (
@@ -35,7 +35,7 @@ const To = ({ currency, currenciesList, output, toggleDropdown, isDropdownActive
     </div>
     <Exchange />
   </div>
-)
+);
 
 To.propTypes = {
   currency: PropTypes.shape({
@@ -55,9 +55,9 @@ const mapStateToProps = state => ({
   currenciesList:   getCurrenciesList(state.currencies.list), 
   isDropdownActive: state.currencies.isToOpened,
   output:           state.currencies.output
-})
+});
 
 export default connect(
   mapStateToProps,
   { toggleDropdown }
-)(To)
+)(To);

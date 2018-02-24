@@ -1,46 +1,121 @@
-import getJSON from 'get-json'
+import getJSON from 'get-json';
 
-import internal from '../api/internal'
-import * as types from '../constants/ActionTypes'
+import internal from '../api/internal';
+import * as types from '../constants/ActionTypes';
 
-import { CURRENCIES, RATES, FROM, TO } from '../constants/DataTypes'
+import {
+  CURRENCIES,
+  RATES,
+  FROM,
+  TO
+} from '../constants/DataTypes';
 
+
+const recieveCurrencies = currencies => ({
+  type: types.RECEIVE_CURRENCIES,
+  currencies
+});
+
+const receiveRates = (rates, state) => {
+  const input = state.currencies.input;
+  const quoteId = state.currencies.to;
+  const quoteName = state.currencies.list[quoteId].name;
+  const rate = rates[quoteName].toFixed(4);
+
+  return {
+    type:   types.RECEIVE_RATES,
+    rates,
+    output: Number((input * rate).toFixed(2)),
+    rate
+  }
+}
+
+const hasFewCurrencies = currencies => ({
+  type: types.HAS_FEW_CURRENCIES,
+  currencies
+});
+
+const setCurrencies = currencies => ({
+  type: types.SET_CURRENCIES,
+  currencies
+});
+
+export const updateInput = input => ({
+  type: types.UPDATE_INPUT,
+  input: Number(input)
+});
+
+export const updateOutput = output => ({
+  type: types.UPDATE_OUTPUT,
+  output
+});
+
+const toggleFromDropdown = () => ({
+  type: types.TOGGLE_FROM_DROPDOWN
+});
+
+const toggleToDropdown = () => ({
+  type: types.TOGGLE_TO_DROPDOWN
+});
+
+const changeFromCurrency = (base, quote, state) => ({
+  type: types.CHANGE_FROM_CURRENCY,
+  base,
+  quote,
+  state
+});
+
+const changeToCurrency = (base, quote, state) => ({
+  type: types.CHANGE_TO_CURRENCY,
+  base,
+  quote,
+  state
+});
+
+const exchangeRequest = () => ({
+  type: types.EXCHANGE_REQUEST
+});
+
+const exchangeSuccess = () => ({
+  type: types.EXCHANGE_SUCCESS
+});
+
+const exchangeError = () => ({
+  type: types.EXCHANGE_ERROR
+});
+
+const shouldGenerateRandomRate = (currencies, rates, random) => {
+  const generateRandom = () => {
+    const name = currencies.list[currencies.to].name
+    const value = ((rates[name]) + Math.random()/30).toFixed(6)
+    return { ...rates, [name]: Number(value) }
+  }
+  return random ? generateRandom() : rates
+}
 
 const receive = (type, data, state = {}) => {
   switch (type) {
     case CURRENCIES:
-      return {
-        type: types.RECEIVE_CURRENCIES,
-        currencies: data
-      }
+      return recieveCurrencies(data)
+
     case RATES:
+      // [!] replace "true" with "false" to disable fake rate's generation
+      const random = true;
+      const rates = shouldGenerateRandomRate(state.currencies, data.rates, random)
+      return receiveRates(rates, state)
 
-      const name = state.currencies.list[state.currencies.to].name
-      const x = ((data.rates[name]) + Math.random()/30).toFixed(6)
-      const rates = ({ ...data.rates, [name]: Number(x) })
-
-      // [!] replace 3 lines above with line below to disable fake-update
-      // const rates = data.rates
-
-      return {
-        type:  types.RECEIVE_RATES,
-        rates: rates,
-        input: state.currencies.input,
-        to:    state.currencies.list[state.currencies.to].name
-      }
     // no default
   }
 }
 
-const getRates = (base) => (dispatch, getState) => {
-  getJSON(`http://api.fixer.io/latest?base=${base}&symbols=USD,GBP,EUR,RUB`, (err, res) => {
+const getRates = (base) => (dispatch, getState) =>
+  getJSON(`http://api.fixer.io/latest?base=${ base }&symbols=USD,GBP,EUR,RUB`, (err, res) => {
     if (res) {
       dispatch(receive(RATES, res, getState()))
     }
-  })
-}
+  });
 
-const ratesListener = () => (dispatch, getState) => {
+const startListener = () => (dispatch, getState) => {
   const update = (time) => {
     const base = getState().currencies.list[getState().currencies.from].name
 
@@ -54,76 +129,53 @@ const ratesListener = () => (dispatch, getState) => {
   update(getState().rates.update)
 }
 
-const setCurrencies = data => dispatch => {
+const setReceivedCurrencies = data => dispatch => {
   const length = Object.keys(data).length
 
   if (length < 2) {
-    dispatch({ type: types.FEW_CURRENCIES, currencies: data })
+    dispatch(hasFewCurrencies(data))
   } else {
-    dispatch({ type: types.SET_CURRENCIES, currencies: data })
-    dispatch(ratesListener())
+    dispatch(setCurrencies(data))
+    dispatch(startListener())
   }
 }
 
 export const getCurrencies = () => dispatch => {
   internal.getData(data => {
     dispatch(receive(CURRENCIES, data))
-    dispatch(setCurrencies(data))
+    dispatch(setReceivedCurrencies(data))
   })
-}
-
-export const updateOutput = value => (dispatch, getState) => {
-  const currency = {
-    input: value,
-    rate:  getState().rates.rate
-  }
-  return dispatch({ type: types.UPDATE_OUTPUT, currency })
 }
 
 const toggleBy = type => {
   switch (type) {
     case FROM:
-      return {
-        type: types.TOGGLE_FROM_DROPDOWN,
-      }
+      return toggleFromDropdown()
     case TO:
-      return {
-        type: types.TOGGLE_TO_DROPDOWN,
-      }
+      return toggleToDropdown()
     // no default
   }
 }
 
 export const toggleDropdown = type => dispatch =>
-  dispatch(toggleBy(type))
-
+  dispatch(toggleBy(type));
 
 const switchCurrencyBy = (id, type, state) => {
   const c = state.currencies
   switch (type) {
     case FROM:
       const to = c.to === id ? c.list[c.from] : c.list[c.to]
-      return {
-        type: types.SWITCH_FROM_CURRENCY,
-        from: c.list[id],
-        to: to,
-        state: state
-      }
+      return changeFromCurrency(c.list[id], to, state)
     case TO:
       const from = c.from === id ? c.list[c.to] : c.list[c.from]
-      return {
-        type: types.SWITCH_TO_CURRENCY,
-        from: from,
-        to: c.list[id],
-        state: state
-      }
+      return changeToCurrency(from, c.list[id], state)
     // no default
   }
 }
 
 export const switchCurrency = (id, type) => (dispatch, getState) => {
   dispatch(switchCurrencyBy(id, type, getState()))
-  dispatch(ratesListener())
+  dispatch(startListener())
 }
 
 export const exchange = () => (dispatch, getState) => {
@@ -138,12 +190,15 @@ export const exchange = () => (dispatch, getState) => {
       value:      c.output
     }
   }
-  dispatch({
-    type: types.EXCHANGE_REQUEST
-  })
-  internal.exchange(request, () => {
-    dispatch({
-      type: types.EXCHANGE_SUCCESS,
-    })
+
+  dispatch(exchangeRequest())
+
+  internal.exchange(request, response => {
+
+    if (response) {
+      dispatch(exchangeSuccess())
+    } else {
+      dispatch(exchangeError())
+    }
   })
 }

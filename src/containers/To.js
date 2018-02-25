@@ -13,26 +13,25 @@ import { getCurrency, getCurrenciesList } from '../reducers/currencies';
 
 
 const To = ({ currency, currenciesList, output, toggleDropdown, isDropdownActive }) => (
-  <div
-    className='to-block'>
+  <div className='block to-block'>
     <Rate />
-    <Currency
-      name={ currency.name }
-      sign={ currency.sign }
-      value={ currency.value }
-      warning={ false }
-      onCurrencyClicked={ () => toggleDropdown(TO) }
-    />
+    <div className='control'>
+      <Currency
+        name={ currency.name }
+        sign={ currency.sign }
+        value={ currency.value }
+        warning={ false }
+        onCurrencyClicked={ () => toggleDropdown(TO) }
+      />
+      <div className='output'>
+        { output ? `+ ${ output }` : 0 }
+      </div>
+    </div>
     <Dropdown 
       list={ currenciesList }
       active={ isDropdownActive }
       type={ TO }
     />
-    <div
-      className='output'
-    >
-      { output ? `+ ${ output }` : 0 }
-    </div>
     <Exchange />
   </div>
 );

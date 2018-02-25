@@ -6,7 +6,8 @@ import { FROM } from '../constants/DataTypes';
 import Currency from '../components/Currency';
 import Dropdown from './Dropdown';
 
-import { updateInput, updateOutput, toggleDropdown } from '../actions';
+import { toggleDropdown } from '../actions';
+import { updateInput, updateOutput } from '../actions/actionCreators';
 import { getCurrency, getCurrenciesList, getFormattedInput, getFormattedOutput } from '../reducers/currencies';
 
 
@@ -32,28 +33,20 @@ const From = ({ currency, currenciesList, updateInput, updateOutput, toggleDropd
 
   const warning = currency.value < currentInput ? true : false;
 
-  const compareValues = currentInput === 0 ? '' : '-' + currentInput;
+  const compareValues = currentInput === '0' || currentInput === '' ? '' : '-' + currentInput;
 
   return (
-    <div
-      className='from-block'
-    >
-      <Currency
-        name={ currency.name }
-        sign={ currency.sign }
-        value={ currency.value }
-        warning= { warning }
-        onCurrencyClicked={ () => toggleDropdown(FROM) }
-      />
-      <Dropdown 
-        list={ currenciesList }
-        active={ isDropdownActive }
-        type={ FROM }
-      />
-      <div
-        className='input'
-      >
+    <div className='block from-block'>
+      <div className='control'>
+        <Currency
+          name={ currency.name }
+          sign={ currency.sign }
+          value={ currency.value }
+          warning= { warning }
+          onCurrencyClicked={ () => toggleDropdown(FROM) }
+        />
         <input
+          className='input'
           type='text'
           placeholder='0'
           ref={ node => { input = node } }
@@ -61,6 +54,11 @@ const From = ({ currency, currenciesList, updateInput, updateOutput, toggleDropd
           onChange={ inputOnChange }
         />
       </div>
+      <Dropdown 
+        list={ currenciesList }
+        active={ isDropdownActive }
+        type={ FROM }
+      />
     </div>
   );
 }
@@ -79,7 +77,7 @@ From.propTypes = {
   isDropdownActive: PropTypes.bool.isRequired,
   formattedInput:   PropTypes.func.isRequired,
   formattedOutput:  PropTypes.func.isRequired,
-  currentInput:     PropTypes.number.isRequired
+  currentInput:     PropTypes.string.isRequired
 }
 
 // add From.defaultProps

@@ -6,16 +6,14 @@ const Currency = ({ name, sign, value, warning, onCurrencyClicked }) => {
   const x = warning ? 'balance warning' : 'balance';
 
   return (
-    <div > 
+    <div> 
       <div
         className='currency'
         onClick={ onCurrencyClicked }
       >
         { name }
       </div>
-      <div
-        className={ x }
-      >
+      <div className={ x }>
         Balance: { sign }{ value }
       </div>
     </div>

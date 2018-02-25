@@ -7,14 +7,11 @@ import { exchange } from '../actions';
 
 
 const Exchange = ({ inputValue, balance, exchange }) => (
-  <div
-    className='exchange-container'
-  >
+  <div className='exchange-container'>
     <button 
       className='exchange-btn'
       onClick={ () => exchange() }
-      style={{ textAlign: 'center', margin: '10px 0' }}
-      disabled={ inputValue === 0 || inputValue > balance ? 'disabled' : '' }
+      disabled={ inputValue === '0' || inputValue === '' || inputValue > balance ? 'disabled' : '' }
     >
       Exchange
     </button>
@@ -22,7 +19,7 @@ const Exchange = ({ inputValue, balance, exchange }) => (
 );
 
 Exchange.propTypes = {
-  inputValue: PropTypes.number.isRequired,
+  inputValue: PropTypes.string.isRequired,
   balance:    PropTypes.number.isRequired,
   exchange:   PropTypes.func.isRequired
 }

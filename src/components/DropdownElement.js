@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 
 const DropdownElement = ({ name, value, onCurrencyClicked }) => (
   <div>
-    <li
-      style={{ cursor: 'pointer' }}
-      onClick={ onCurrencyClicked }
-    >
+    <li onClick={ onCurrencyClicked }>
       { name } - { value }
     </li>
   </div>

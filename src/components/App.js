@@ -6,14 +6,10 @@ import To from '../containers/To';
 
 
 const App = () => (
-  <div 
-  	className='container'
-  >
+  <div className='container'>
     <h2>Exchange</h2>
-    <div>
-      <From />
-      <To />
-    </div>
+    <From />
+    <To />
   </div>
 );
 

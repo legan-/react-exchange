@@ -20,12 +20,8 @@ const Rate = ({ rate, from, to }) => {
     );
   }
   return (
-    <div
-      className='rate-container'
-    >
-      <div
-        className='rate'
-      >
+    <div className='rate-container'>
+      <div className='rate'>
         <div>
           { from }1 = { to }
         </div>

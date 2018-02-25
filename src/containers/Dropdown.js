@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FROM } from '../constants/DataTypes';
 
 import DropdownElement from '../components/DropdownElement';
 
@@ -10,11 +11,13 @@ import { switchCurrency } from '../actions';
 const Dropdown = ({ list, active, type, switchCurrency }) => {
   let ul;
 
+  const currencyType = type === FROM ? 'base' : 'quote'
+
   if (active) {
     ul = (
       <ul>
         <p>
-          Choose currency:
+          Choose { currencyType } currency:
         </p>
         { list.map(currency =>
           <DropdownElement
@@ -28,9 +31,7 @@ const Dropdown = ({ list, active, type, switchCurrency }) => {
     );
   }
   return (
-    <div
-      className='dropdown'
-    >
+    <div className='dropdown'>
       { ul }
     </div>
   );

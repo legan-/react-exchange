@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 
 import Types from '../constants/ActionTypes';
 
-
 const rate = (state = null, action) => {
   switch (action.type) {
     case Types.RECEIVE_RATES:
@@ -10,7 +9,7 @@ const rate = (state = null, action) => {
     default:
       return state;
   }
-}
+};
 
 const update = (state = new Date().getTime(), action) => {
   switch (action.type) {
@@ -20,23 +19,25 @@ const update = (state = new Date().getTime(), action) => {
     default:
       return state;
   }
-}
+};
 
 const list = (state = {}, action) => {
   switch (action.type) {
     case Types.RECEIVE_RATES:
       return {
-        ...action.rates
-      }
+        ...action.rates,
+      };
     default:
       return state;
   }
-}
+};
 
 export default combineReducers({
   rate,
   update,
-  list
+  list,
 });
 
-export const getRate = state => state.rate || '0';
+const getRate = state => state.rate || '0';
+
+export { getRate };

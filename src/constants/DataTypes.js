@@ -1,4 +1,6 @@
-export const CURRENCIES = 'CURRENCIES';
-export const RATES 			= 'RATES';
-export const FROM 			= 'FROM';
-export const TO 				= 'TO';
+const CURRENCIES = 'CURRENCIES';
+const RATES = 'RATES';
+const FROM = 'FROM';
+const TO = 'TO';
+
+export { CURRENCIES, RATES, FROM, TO };

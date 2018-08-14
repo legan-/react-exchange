@@ -1,70 +1,85 @@
 import Types from '../constants/ActionTypes';
 
-
-export const recieveCurrencies = currencies => ({
+const recieveCurrencies = currencies => ({
   type: Types.RECEIVE_CURRENCIES,
-  currencies
+  currencies,
 });
 
-export const receiveRates = (output, rates, rate) => ({
+const receiveRates = (output, rates, rate) => ({
   type: Types.RECEIVE_RATES,
   output,
   rates,
-  rate
+  rate,
 });
 
-export const hasFewCurrencies = currencies => ({
+const hasFewCurrencies = currencies => ({
   type: Types.HAS_FEW_CURRENCIES,
-  currencies
+  currencies,
 });
 
-export const setCurrencies = currencies => ({
+const setCurrencies = currencies => ({
   type: Types.SET_CURRENCIES,
-  currencies
+  currencies,
 });
 
-export const updateInput = input => ({
+const updateInput = input => ({
   type: Types.UPDATE_INPUT,
-  input
+  input,
 });
 
-export const updateOutput = output => ({
+const updateOutput = output => ({
   type: Types.UPDATE_OUTPUT,
-  output
+  output,
 });
 
-export const toggleFromDropdown = () => ({
-  type: Types.TOGGLE_FROM_DROPDOWN
+const toggleFromDropdown = () => ({
+  type: Types.TOGGLE_FROM_DROPDOWN,
 });
 
-export const toggleToDropdown = () => ({
-  type: Types.TOGGLE_TO_DROPDOWN
+const toggleToDropdown = () => ({
+  type: Types.TOGGLE_TO_DROPDOWN,
 });
 
-export const changeFromCurrency = (base, quote, state, time) => ({
+const changeFromCurrency = (base, quote, state, time) => ({
   type: Types.CHANGE_FROM_CURRENCY,
   base,
   quote,
   state,
-  time
+  time,
 });
 
-export const changeToCurrency = (base, quote, state, time) => ({
+const changeToCurrency = (base, quote, state, time) => ({
   type: Types.CHANGE_TO_CURRENCY,
   base,
   quote,
   state,
-  time
+  time,
 });
 
-export const exchangeRequest = () => ({
-  type: Types.EXCHANGE_REQUEST
+const exchangeRequest = () => ({
+  type: Types.EXCHANGE_REQUEST,
 });
 
-export const exchangeSuccess = () => ({
-  type: Types.EXCHANGE_SUCCESS
+const exchangeSuccess = () => ({
+  type: Types.EXCHANGE_SUCCESS,
 });
 
-export const exchangeError = () => ({
-  type: Types.EXCHANGE_ERROR
+const exchangeError = () => ({
+  type: Types.EXCHANGE_ERROR,
 });
+
+export {
+  recieveCurrencies,
+  receiveRates,
+  hasFewCurrencies,
+  setCurrencies,
+  updateInput,
+  updateOutput,
+  toggleFromDropdown,
+  toggleToDropdown,
+  changeFromCurrency,
+  changeToCurrency,
+  exchangeRequest,
+  exchangeSuccess,
+  exchangeError,
+};

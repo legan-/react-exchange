@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 
 import Types from '../constants/ActionTypes';
 
-
 const list = (state = {}, action) => {
   switch (action.type) {
     case Types.RECEIVE_CURRENCIES:
@@ -11,12 +10,12 @@ const list = (state = {}, action) => {
         ...action.currencies.reduce((obj, currency) => {
           obj[currency.id] = currency;
           return obj;
-        }, {})
-      }
+        }, {}),
+      };
     default:
       return state;
   }
-}
+};
 
 const isFromOpened = (state = false, action) => {
   switch (action.type) {
@@ -31,7 +30,7 @@ const isFromOpened = (state = false, action) => {
     default:
       return state;
   }
-}
+};
 
 const isToOpened = (state = false, action) => {
   switch (action.type) {
@@ -46,8 +45,7 @@ const isToOpened = (state = false, action) => {
     default:
       return state;
   }
-}
-
+};
 
 const from = (state = null, action) => {
   switch (action.type) {
@@ -59,7 +57,7 @@ const from = (state = null, action) => {
     default:
       return state;
   }
-}
+};
 
 const to = (state = null, action) => {
   switch (action.type) {
@@ -71,7 +69,7 @@ const to = (state = null, action) => {
     default:
       return state;
   }
-}
+};
 
 const input = (state = '', action) => {
   switch (action.type) {
@@ -82,7 +80,7 @@ const input = (state = '', action) => {
     default:
       return state;
   }
-}
+};
 
 const output = (state = 0, action) => {
   switch (action.type) {
@@ -94,7 +92,7 @@ const output = (state = 0, action) => {
     default:
       return state;
   }
-}
+};
 
 export default combineReducers({
   list,
@@ -103,16 +101,18 @@ export default combineReducers({
   from,
   to,
   input,
-  output
+  output,
 });
 
-export const getCurrency = (type, id) => type[id] || {}
+const getCurrency = (type, id) => type[id] || {};
 
-export const getCurrenciesList = state => Object.values(state);
+const getCurrenciesList = state => Object.values(state);
 
-export const getFormattedInput = input => {
-
-  let value = input.replace(/[-[\]\s()<>{}"'`|/,;:~+=_!?@#£$€%^&*A-Za-zА-Яа-я]/g, '');
+const getFormattedInput = input => {
+  let value = input.replace(
+    /[-[\]\s()<>{}"'`|/,;:~+=_!?@#£$€%^&*A-Za-zА-Яа-я]/g,
+    '',
+  );
 
   const nulls = input.match(/[0]/g);
   if (nulls && nulls.length > 0) {
@@ -125,7 +125,14 @@ export const getFormattedInput = input => {
   }
 
   return value;
-}
+};
 
-export const getFormattedOutput = state => input =>
+const getFormattedOutput = state => input =>
   parseFloat((input * state.rates.rate).toFixed(2));
+
+export {
+  getCurrency,
+  getCurrenciesList,
+  getFormattedInput,
+  getFormattedOutput,
+};

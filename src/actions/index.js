@@ -1,23 +1,17 @@
 import * as actions from './actionCreators';
 
-import internal from '../api/internal';
+import api from '../api';
 
-import {
-  CURRENCIES,
-  RATES,
-  FROM,
-  TO
-} from '../constants/DataTypes';
-
+import { CURRENCIES, RATES, FROM, TO } from '../constants/DataTypes';
 
 const shouldGenerateRandomRate = (currencies, rates, random) => {
   const generateRandom = () => {
     const name = currencies.list[currencies.to].name;
-    const value = ((rates[name]) + Math.random()/30).toFixed(6);
-    return { ...rates, [name]: Number(value) }
-  }
+    const value = (rates[name] + Math.random() / 30).toFixed(6);
+    return { ...rates, [name]: Number(value) };
+  };
   return random ? generateRandom() : rates;
-}
+};
 
 const receive = (type, data, state = {}) => {
   switch (type) {
@@ -26,7 +20,11 @@ const receive = (type, data, state = {}) => {
     case RATES:
       // [!] replace "true" with "false" to disable fake rate's generation
       const random = true;
-      const rates = shouldGenerateRandomRate(state.currencies, data.rates, random);
+      const rates = shouldGenerateRandomRate(
+        state.currencies,
+        data.rates,
+        random,
+      );
 
       const input = state.currencies.input;
       const quoteId = state.currencies.to;
@@ -37,19 +35,18 @@ const receive = (type, data, state = {}) => {
       return actions.receiveRates(output, rates, rate);
     // no default
   }
-}
+};
 
-const getRates = (base) => (dispatch, getState) =>
-  fetch(`http://api.fixer.io/latest?base=${ base }&symbols=USD,GBP,EUR,RUB`)
-  .then(response => response.json())
-  .then(json => {
-    if (json) {
-      dispatch(receive(RATES, json, getState()));
+const getRates = base => (dispatch, getState) => {
+  api.fetchRates(base).then(data => {
+    if (data) {
+      dispatch(receive(RATES, data, getState()));
     }
   });
+};
 
 const startListener = () => (dispatch, getState) => {
-  const update = (time) => {
+  const update = time => {
     const base = getState().currencies.list[getState().currencies.from].name;
 
     dispatch(getRates(base));
@@ -57,10 +54,10 @@ const startListener = () => (dispatch, getState) => {
       if (getState().rates.update === time) {
         update(getState().rates.update);
       }
-    }, 10000)
-  }
+    }, 10000);
+  };
   update(getState().rates.update);
-}
+};
 
 const setReceivedCurrencies = data => dispatch => {
   const length = Object.keys(data).length;
@@ -71,14 +68,14 @@ const setReceivedCurrencies = data => dispatch => {
     dispatch(actions.setCurrencies(data));
     dispatch(startListener());
   }
-}
+};
 
-export const getCurrencies = () => dispatch => {
-  internal.getData(data => {
+const getCurrencies = () => dispatch => {
+  api.fetchCurrencies().then(data => {
     dispatch(receive(CURRENCIES, data));
     dispatch(setReceivedCurrencies(data));
-  })
-}
+  });
+};
 
 const toggleBy = type => {
   switch (type) {
@@ -88,51 +85,51 @@ const toggleBy = type => {
       return actions.toggleToDropdown();
     // no default
   }
-}
+};
 
-export const toggleDropdown = type => dispatch =>
-  dispatch(toggleBy(type));
+const toggleDropdown = type => dispatch => dispatch(toggleBy(type));
 
 const switchCurrencyBy = (id, type, state) => {
-  const c = state.currencies;
+  const { from, to, list } = state.currencies;
   const time = new Date().getTime();
   switch (type) {
     case FROM:
-      const to = c.to === id ? c.list[c.from] : c.list[c.to];
-      return actions.changeFromCurrency(c.list[id], to, state, time);
+      const t = to === id ? list[from] : list[to];
+      return actions.changeFromCurrency(list[id], t, state, time);
     case TO:
-      const from = c.from === id ? c.list[c.to] : c.list[c.from];
-      return actions.changeToCurrency(from, c.list[id], state, time);
+      const f = from === id ? list[to] : list[from];
+      return actions.changeToCurrency(f, list[id], state, time);
     // no default
   }
-}
+};
 
-export const switchCurrency = (id, type) => (dispatch, getState) => {
+const switchCurrency = (id, type) => (dispatch, getState) => {
   dispatch(switchCurrencyBy(id, type, getState()));
   dispatch(startListener());
-}
+};
 
-export const exchange = () => (dispatch, getState) => {
-  const c = getState().currencies
+const submitExchange = () => (dispatch, getState) => {
+  const { from, to, input, output } = getState().currencies;
   const request = {
     from: {
-      currencyId: c.from,
-      value:      c.input
+      currencyId: from,
+      value: input,
     },
     to: {
-      currencyId: c.to,
-      value:      c.output
-    }
-  }
+      currencyId: to,
+      value: output,
+    },
+  };
 
   dispatch(actions.exchangeRequest());
 
-  internal.exchange(request, response => {
-
+  api.exchange(request).then(response => {
     if (response) {
       dispatch(actions.exchangeSuccess());
     } else {
       dispatch(actions.exchangeError());
     }
-  })
-}
+  });
+};
+
+export { getCurrencies, toggleDropdown, switchCurrency, submitExchange };

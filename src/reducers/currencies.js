@@ -1,23 +1,24 @@
 import { combineReducers } from 'redux';
 
+import initialState from './initialState';
 import Types from '../constants/ActionTypes';
 
-const list = (state = {}, action) => {
+const list = (state = initialState.currencies.list, action) => {
   switch (action.type) {
-    case Types.RECEIVE_CURRENCIES:
+    case Types.RECEIVE_CURRENCIES_SUCCESS:
       return {
         ...state,
         ...action.currencies.reduce((obj, currency) => {
           obj[currency.id] = currency;
           return obj;
-        }, {}),
+        }, {})
       };
     default:
       return state;
   }
 };
 
-const isFromOpened = (state = false, action) => {
+const isFromOpen = (state = initialState.currencies.isFromOpen, action) => {
   switch (action.type) {
     case Types.TOGGLE_FROM_DROPDOWN:
       return !state;
@@ -32,7 +33,7 @@ const isFromOpened = (state = false, action) => {
   }
 };
 
-const isToOpened = (state = false, action) => {
+const isToOpen = (state = initialState.currencies.isToOpen, action) => {
   switch (action.type) {
     case Types.TOGGLE_TO_DROPDOWN:
       return !state;
@@ -47,7 +48,7 @@ const isToOpened = (state = false, action) => {
   }
 };
 
-const from = (state = null, action) => {
+const from = (state = initialState.currencies.from, action) => {
   switch (action.type) {
     case Types.SET_CURRENCIES:
       return action.currencies[0].id;
@@ -59,7 +60,7 @@ const from = (state = null, action) => {
   }
 };
 
-const to = (state = null, action) => {
+const to = (state = initialState.currencies.to, action) => {
   switch (action.type) {
     case Types.SET_CURRENCIES:
       return action.currencies[1].id;
@@ -71,7 +72,7 @@ const to = (state = null, action) => {
   }
 };
 
-const input = (state = '', action) => {
+const input = (state = initialState.currencies.input, action) => {
   switch (action.type) {
     case Types.UPDATE_INPUT:
       return action.input;
@@ -82,13 +83,26 @@ const input = (state = '', action) => {
   }
 };
 
-const output = (state = 0, action) => {
+const output = (state = initialState.currencies.output, action) => {
   switch (action.type) {
     case Types.UPDATE_OUTPUT:
-    case Types.RECEIVE_RATES:
       return action.output;
     case Types.EXCHANGE_SUCCESS:
-      return 0;
+      return initialState.currencies.input;
+    default:
+      return state;
+  }
+};
+
+const warning = (state = initialState.currencies.warning, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+const sending = (state = initialState.currencies.sending, action) => {
+  switch (action.type) {
     default:
       return state;
   }
@@ -96,43 +110,12 @@ const output = (state = 0, action) => {
 
 export default combineReducers({
   list,
-  isFromOpened,
-  isToOpened,
+  isFromOpen,
+  isToOpen,
   from,
   to,
   input,
   output,
+  warning,
+  sending
 });
-
-const getCurrency = (type, id) => type[id] || {};
-
-const getCurrenciesList = state => Object.values(state);
-
-const getFormattedInput = input => {
-  let value = input.replace(
-    /[-[\]\s()<>{}"'`|/,;:~+=_!?@#£$€%^&*A-Za-zА-Яа-я]/g,
-    '',
-  );
-
-  const nulls = input.match(/[0]/g);
-  if (nulls && nulls.length > 0) {
-    value = value.replace(/^0+(?=[0-9])/g, '');
-  }
-
-  const dots = input.match(/[.]/g);
-  if (dots && dots.length > 1) {
-    value = value.replace(/.$/g, '');
-  }
-
-  return value;
-};
-
-const getFormattedOutput = state => input =>
-  parseFloat((input * state.rates.rate).toFixed(2));
-
-export {
-  getCurrency,
-  getCurrenciesList,
-  getFormattedInput,
-  getFormattedOutput,
-};

@@ -1,17 +1,18 @@
 import { combineReducers } from 'redux';
 
+import initialState from './initialState';
 import Types from '../constants/ActionTypes';
 
-const rate = (state = null, action) => {
+const rate = (state = initialState.rates.rate, action) => {
   switch (action.type) {
-    case Types.RECEIVE_RATES:
+    case Types.RECEIVE_RATES_SUCCESS:
       return action.rate;
     default:
       return state;
   }
 };
 
-const update = (state = new Date().getTime(), action) => {
+const updatedAt = (state = initialState.rates.updatedAt, action) => {
   switch (action.type) {
     case Types.CHANGE_FROM_CURRENCY:
     case Types.CHANGE_TO_CURRENCY:
@@ -21,11 +22,11 @@ const update = (state = new Date().getTime(), action) => {
   }
 };
 
-const list = (state = {}, action) => {
+const list = (state = initialState.rates.list, action) => {
   switch (action.type) {
-    case Types.RECEIVE_RATES:
+    case Types.RECEIVE_RATES_SUCCESS:
       return {
-        ...action.rates,
+        ...action.rates
       };
     default:
       return state;
@@ -34,10 +35,6 @@ const list = (state = {}, action) => {
 
 export default combineReducers({
   rate,
-  update,
-  list,
+  updatedAt,
+  list
 });
-
-const getRate = state => state.rate || '0';
-
-export { getRate };

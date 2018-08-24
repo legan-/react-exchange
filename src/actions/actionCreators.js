@@ -1,43 +1,42 @@
 import Types from '../constants/ActionTypes';
 
-const recieveCurrencies = currencies => ({
-  type: Types.RECEIVE_CURRENCIES,
-  currencies,
+const recieveCurrenciesSuccess = currencies => ({
+  type: Types.RECEIVE_CURRENCIES_SUCCESS,
+  currencies
 });
 
-const receiveRates = (output, rates, rate) => ({
-  type: Types.RECEIVE_RATES,
-  output,
+const receiveRatesSuccess = (rates, rate) => ({
+  type: Types.RECEIVE_RATES_SUCCESS,
   rates,
-  rate,
+  rate
 });
 
 const hasFewCurrencies = currencies => ({
   type: Types.HAS_FEW_CURRENCIES,
-  currencies,
+  currencies
 });
 
 const setCurrencies = currencies => ({
   type: Types.SET_CURRENCIES,
-  currencies,
+  currencies
 });
 
 const updateInput = input => ({
   type: Types.UPDATE_INPUT,
-  input,
+  input
 });
 
 const updateOutput = output => ({
   type: Types.UPDATE_OUTPUT,
-  output,
+  output
 });
 
 const toggleFromDropdown = () => ({
-  type: Types.TOGGLE_FROM_DROPDOWN,
+  type: Types.TOGGLE_FROM_DROPDOWN
 });
 
 const toggleToDropdown = () => ({
-  type: Types.TOGGLE_TO_DROPDOWN,
+  type: Types.TOGGLE_TO_DROPDOWN
 });
 
 const changeFromCurrency = (base, quote, state, time) => ({
@@ -45,7 +44,7 @@ const changeFromCurrency = (base, quote, state, time) => ({
   base,
   quote,
   state,
-  time,
+  time
 });
 
 const changeToCurrency = (base, quote, state, time) => ({
@@ -53,24 +52,24 @@ const changeToCurrency = (base, quote, state, time) => ({
   base,
   quote,
   state,
-  time,
+  time
 });
 
 const exchangeRequest = () => ({
-  type: Types.EXCHANGE_REQUEST,
+  type: Types.EXCHANGE_REQUEST
 });
 
 const exchangeSuccess = () => ({
-  type: Types.EXCHANGE_SUCCESS,
+  type: Types.EXCHANGE_SUCCESS
 });
 
 const exchangeError = () => ({
-  type: Types.EXCHANGE_ERROR,
+  type: Types.EXCHANGE_ERROR
 });
 
 export {
-  recieveCurrencies,
-  receiveRates,
+  recieveCurrenciesSuccess,
+  receiveRatesSuccess,
   hasFewCurrencies,
   setCurrencies,
   updateInput,
@@ -81,5 +80,5 @@ export {
   changeToCurrency,
   exchangeRequest,
   exchangeSuccess,
-  exchangeError,
+  exchangeError
 };

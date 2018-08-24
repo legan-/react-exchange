@@ -10,15 +10,9 @@ import Dropdown from '../Dropdown/';
 import Exchange from './Exchange';
 
 import { toggleDropdown } from '../../actions';
-import { getCurrency, getCurrenciesList } from '../../reducers/currencies';
+import { getCurrency, getCurrenciesList } from '../../selectors/currencies';
 
-const To = ({
-  currency,
-  currenciesList,
-  output,
-  onCurrencyClick,
-  isDropdownActive,
-}) => (
+const To = ({ currency, currenciesList, output, onCurrencyClick, isDropdownActive }) => (
   <div className="block to-block">
     <Rate />
     <div className="control">
@@ -41,26 +35,26 @@ To.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     sign: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.string
   }).isRequired,
   currenciesList: PropTypes.array.isRequired,
   output: PropTypes.number.isRequired,
   onCurrencyClick: PropTypes.func.isRequired,
-  isDropdownActive: PropTypes.bool.isRequired,
+  isDropdownActive: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
   currency: getCurrency(state.currencies.list, state.currencies.to),
   currenciesList: getCurrenciesList(state.currencies.list),
-  isDropdownActive: state.currencies.isToOpened,
-  output: state.currencies.output,
+  isDropdownActive: state.currencies.isToOpen,
+  output: state.currencies.output
 });
 
 const mapDispatchToProps = dispatch => ({
-  onCurrencyClick: () => dispatch(toggleDropdown(TO)),
+  onCurrencyClick: () => dispatch(toggleDropdown(TO))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(To);

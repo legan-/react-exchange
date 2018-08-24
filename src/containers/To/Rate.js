@@ -2,42 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getRate } from '../../reducers/rates';
-import { getCurrency } from '../../reducers/currencies';
+import { getCurrency } from '../../selectors/currencies';
 
-const Rate = ({ rate, from, to }) => {
-  let formattedRate = '';
-
-  if (rate.length) {
-    formattedRate = (
-      <div>
-        {rate.slice(0, 4)}
-        <span>{rate.slice(-2)}</span>
-      </div>
-    );
-  }
-  return (
-    <div className="rate-container">
-      <div className="rate">
-        <div>
-          {from}1 = {to}
-        </div>
-        {formattedRate}
-      </div>
+const Rate = ({ rate, fromSign, toSign }) => (
+  <div className="rate-container">
+    <div className="rate">
+      {fromSign}1 = {toSign}
+      {rate.slice(0, 4)}
+      <span>{rate.slice(-2)}</span>
     </div>
-  );
-};
+  </div>
+);
 
 Rate.propTypes = {
-  rate: PropTypes.string,
-  from: PropTypes.string,
-  to: PropTypes.string,
+  rate: PropTypes.string.isRequired,
+  fromSign: PropTypes.string,
+  toSign: PropTypes.string
 };
 
-const mapStateToProps = state => ({
-  rate: getRate(state.rates),
-  from: getCurrency(state.currencies.list, state.currencies.from).sign,
-  to: getCurrency(state.currencies.list, state.currencies.to).sign,
-});
+const mapStateToProps = state => {
+  // put logic in here ?
+  return {
+    rate: state.rates.rate || '0',
+    fromSign: getCurrency(state.currencies.list, state.currencies.from).sign,
+    toSign: getCurrency(state.currencies.list, state.currencies.to).sign
+  };
+};
 
 export default connect(mapStateToProps)(Rate);

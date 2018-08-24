@@ -2,79 +2,69 @@ import * as actions from './actionCreators';
 
 import api from '../api';
 
-import { CURRENCIES, RATES, FROM, TO } from '../constants/DataTypes';
+import { FROM, TO } from '../constants/DataTypes';
 
-const shouldGenerateRandomRate = (currencies, rates, random) => {
-  const generateRandom = () => {
-    const name = currencies.list[currencies.to].name;
-    const value = (rates[name] + Math.random() / 30).toFixed(6);
-    return { ...rates, [name]: Number(value) };
-  };
-  return random ? generateRandom() : rates;
-};
-
-const receive = (type, data, state = {}) => {
-  switch (type) {
-    case CURRENCIES:
-      return actions.recieveCurrencies(data);
-    case RATES:
-      // [!] replace "true" with "false" to disable fake rate's generation
-      const random = true;
-      const rates = shouldGenerateRandomRate(
-        state.currencies,
-        data.rates,
-        random,
-      );
-
-      const input = state.currencies.input;
-      const quoteId = state.currencies.to;
-      const quoteName = state.currencies.list[quoteId].name;
-      const rate = rates[quoteName].toFixed(4);
-      const output = Number((input * rate).toFixed(2));
-
-      return actions.receiveRates(output, rates, rate);
-    // no default
-  }
+const calcAndUpdateOutput = () => (dispatch, getState) => {
+  const rate = getState().rates.rate;
+  const input = getState().currencies.input;
+  const output = Number((input * rate).toFixed(2));
+  dispatch(actions.updateOutput(output));
 };
 
 const getRates = base => (dispatch, getState) => {
-  api.fetchRates(base).then(data => {
-    if (data) {
-      dispatch(receive(RATES, data, getState()));
-    }
-  });
+  api
+    .fetchRates(base)
+    .then(data => {
+      if (data) {
+        const rates = data.rates;
+        const quoteId = getState().currencies.to;
+        const quoteName = getState().currencies.list[quoteId].name;
+        const rate = rates[quoteName].toFixed(4);
+        dispatch(actions.receiveRatesSuccess(rates, rate));
+
+        dispatch(calcAndUpdateOutput());
+      }
+    })
+    .catch(error => {
+      throw error;
+    });
 };
 
-const startListener = () => (dispatch, getState) => {
+const startRateListener = () => (dispatch, getState) => {
   const update = time => {
     const base = getState().currencies.list[getState().currencies.from].name;
 
     dispatch(getRates(base));
     setTimeout(() => {
-      if (getState().rates.update === time) {
-        update(getState().rates.update);
+      if (getState().rates.updatedAt === time) {
+        update(getState().rates.updatedAt);
       }
-    }, 10000);
+    }, 5000);
   };
-  update(getState().rates.update);
+  update(getState().rates.updatedAt);
 };
 
 const setReceivedCurrencies = data => dispatch => {
-  const length = Object.keys(data).length;
+  const currencyLength = Object.keys(data).length;
 
-  if (length < 2) {
+  if (currencyLength < 2) {
     dispatch(actions.hasFewCurrencies(data));
   } else {
     dispatch(actions.setCurrencies(data));
-    dispatch(startListener());
+    dispatch(startRateListener());
   }
 };
 
 const getCurrencies = () => dispatch => {
-  api.fetchCurrencies().then(data => {
-    dispatch(receive(CURRENCIES, data));
-    dispatch(setReceivedCurrencies(data));
-  });
+  api
+    .fetchCurrencies()
+    .then(data => {
+      dispatch(actions.recieveCurrenciesSuccess(data));
+      dispatch(setReceivedCurrencies(data));
+    })
+    .catch(error => {
+      throw error;
+    });
 };
 
 const toggleBy = type => {
@@ -105,7 +95,7 @@ const switchCurrencyBy = (id, type, state) => {
 
 const switchCurrency = (id, type) => (dispatch, getState) => {
   dispatch(switchCurrencyBy(id, type, getState()));
-  dispatch(startListener());
+  dispatch(startRateListener());
 };
 
 const submitExchange = () => (dispatch, getState) => {
@@ -113,23 +103,52 @@ const submitExchange = () => (dispatch, getState) => {
   const request = {
     from: {
       currencyId: from,
-      value: input,
+      value: input
     },
     to: {
       currencyId: to,
-      value: output,
-    },
+      value: output
+    }
   };
 
   dispatch(actions.exchangeRequest());
 
-  api.exchange(request).then(response => {
-    if (response) {
-      dispatch(actions.exchangeSuccess());
-    } else {
-      dispatch(actions.exchangeError());
-    }
-  });
+  api
+    .exchange(request)
+    .then(response => {
+      if (response) {
+        dispatch(actions.exchangeSuccess());
+      } else {
+        dispatch(actions.exchangeError());
+      }
+    })
+    .catch(error => {
+      throw error;
+    });
 };
 
-export { getCurrencies, toggleDropdown, switchCurrency, submitExchange };
+const formattedInput = input => {
+  let value = input.replace(/[-[\]\s()<>{}"'`|/,;:~+=_!?@#£$€%^&*A-Za-zА-Яа-я]/g, '');
+
+  const nulls = input.match(/[0]/g);
+  if (nulls && nulls.length > 0) {
+    value = value.replace(/^0+(?=[0-9])/g, '');
+  }
+
+  const dots = input.match(/[.]/g);
+  if (dots && dots.length > 1) {
+    value = value.replace(/.$/g, '');
+  }
+
+  return value || '0';
+};
+
+const onInputChange = e => (dispatch, getState) => {
+  const value = e.target.value;
+  const formattedValue = formattedInput(value);
+
+  dispatch(actions.updateInput(formattedValue));
+  dispatch(calcAndUpdateOutput());
+};
+
+export { getCurrencies, toggleDropdown, switchCurrency, submitExchange, onInputChange };

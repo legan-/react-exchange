@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { TO } from '../../constants/DataTypes';
+import { QUOTE } from '../../constants/DataTypes';
 
 import Currency from '../../components/common/Currency';
 import Rate from './Rate';
@@ -12,8 +12,8 @@ import Exchange from './Exchange';
 import { toggleDropdown } from '../../actions';
 import { getCurrency, getCurrenciesList } from '../../selectors/currencies';
 
-const To = ({ currency, currenciesList, output, onCurrencyClick, isDropdownActive }) => (
-  <div className="block to-block">
+const Quote = ({ currency, currenciesList, output, onCurrencyClick, isDropdownActive }) => (
+  <div className="block quote-block">
     <Rate />
     <div className="control">
       <Currency
@@ -25,12 +25,12 @@ const To = ({ currency, currenciesList, output, onCurrencyClick, isDropdownActiv
       />
       <div className="output">{output ? `+ ${output}` : 0}</div>
     </div>
-    <Dropdown list={currenciesList} active={isDropdownActive} type={TO} />
+    <Dropdown list={currenciesList} active={isDropdownActive} type={QUOTE} />
     <Exchange />
   </div>
 );
 
-To.propTypes = {
+Quote.propTypes = {
   currency: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
@@ -44,17 +44,17 @@ To.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  currency: getCurrency(state.currencies.list, state.currencies.to),
+  currency: getCurrency(state.currencies.list, state.currencies.quote),
   currenciesList: getCurrenciesList(state.currencies.list),
-  isDropdownActive: state.currencies.isToOpen,
+  isDropdownActive: state.currencies.isQuoteOpen,
   output: state.currencies.output
 });
 
 const mapDispatchToProps = dispatch => ({
-  onCurrencyClick: () => dispatch(toggleDropdown(TO))
+  onCurrencyClick: () => dispatch(toggleDropdown(QUOTE))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(To);
+)(Quote);

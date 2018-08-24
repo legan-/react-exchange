@@ -2,7 +2,7 @@ import * as actions from './actionCreators';
 
 import api from '../api';
 
-import { FROM, TO } from '../constants/DataTypes';
+import { BASE, QUOTE } from '../constants/DataTypes';
 
 const calcAndUpdateOutput = () => (dispatch, getState) => {
   const rate = getState().rates.rate;
@@ -17,7 +17,7 @@ const getRates = base => (dispatch, getState) => {
     .then(data => {
       if (data) {
         const rates = data.rates;
-        const quoteId = getState().currencies.to;
+        const quoteId = getState().currencies.quote;
         const quoteName = getState().currencies.list[quoteId].name;
         const rate = rates[quoteName].toFixed(4);
         dispatch(actions.receiveRatesSuccess(rates, rate));
@@ -32,7 +32,7 @@ const getRates = base => (dispatch, getState) => {
 
 const startRateListener = () => (dispatch, getState) => {
   const update = time => {
-    const base = getState().currencies.list[getState().currencies.from].name;
+    const base = getState().currencies.list[getState().currencies.base].name;
 
     dispatch(getRates(base));
     setTimeout(() => {
@@ -69,10 +69,10 @@ const getCurrencies = () => dispatch => {
 
 const toggleBy = type => {
   switch (type) {
-    case FROM:
-      return actions.toggleFromDropdown();
-    case TO:
-      return actions.toggleToDropdown();
+    case BASE:
+      return actions.toggleBaseDropdown();
+    case QUOTE:
+      return actions.toggleQuoteDropdown();
     // no default
   }
 };
@@ -80,15 +80,15 @@ const toggleBy = type => {
 const toggleDropdown = type => dispatch => dispatch(toggleBy(type));
 
 const switchCurrencyBy = (id, type, state) => {
-  const { from, to, list } = state.currencies;
+  const { base, quote, list } = state.currencies;
   const time = new Date().getTime();
   switch (type) {
-    case FROM:
-      const t = to === id ? list[from] : list[to];
-      return actions.changeFromCurrency(list[id], t, state, time);
-    case TO:
-      const f = from === id ? list[to] : list[from];
-      return actions.changeToCurrency(f, list[id], state, time);
+    case BASE:
+      const t = quote === id ? list[base] : list[quote];
+      return actions.changeBaseCurrency(list[id], t, state, time);
+    case QUOTE:
+      const f = base === id ? list[quote] : list[base];
+      return actions.changeQuoteCurrency(f, list[id], state, time);
     // no default
   }
 };
@@ -99,14 +99,14 @@ const switchCurrency = (id, type) => (dispatch, getState) => {
 };
 
 const submitExchange = () => (dispatch, getState) => {
-  const { from, to, input, output } = getState().currencies;
+  const { base, quote, input, output } = getState().currencies;
   const request = {
-    from: {
-      currencyId: from,
+    base: {
+      currencyId: base,
       value: input
     },
-    to: {
-      currencyId: to,
+    quote: {
+      currencyId: quote,
       value: output
     }
   };

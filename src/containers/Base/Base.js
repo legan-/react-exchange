@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { FROM } from '../../constants/DataTypes';
+import { BASE } from '../../constants/DataTypes';
 
 import Currency from '../../components/common/Currency';
 import Dropdown from '../Dropdown';
@@ -11,7 +11,7 @@ import { toggleDropdown, onInputChange } from '../../actions';
 import { updateOutput } from '../../actions/actionCreators';
 import { getCurrency, getCurrenciesList } from '../../selectors/currencies';
 
-const From = ({
+const Base = ({
   currency,
   currenciesList,
   onInputChange,
@@ -24,7 +24,7 @@ const From = ({
   const warning = Number(currentInput) > Number(currency.value) ? true : false;
 
   return (
-    <div className="block from-block">
+    <div className="block base-block">
       <div className="control">
         <Currency
           name={currency.name}
@@ -41,12 +41,12 @@ const From = ({
           onChange={onInputChange}
         />
       </div>
-      <Dropdown list={currenciesList} active={isDropdownActive} type={FROM} />
+      <Dropdown list={currenciesList} active={isDropdownActive} type={BASE} />
     </div>
   );
 };
 
-From.propTypes = {
+Base.propTypes = {
   currency: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
@@ -63,12 +63,12 @@ From.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { list, from, input, isFromOpen } = state.currencies;
+  const { list, base, input, isBaseOpen } = state.currencies;
 
   return {
-    currency: getCurrency(list, from),
+    currency: getCurrency(list, base),
     currenciesList: getCurrenciesList(list),
-    isDropdownActive: isFromOpen,
+    isDropdownActive: isBaseOpen,
     currentInput: input,
     inputValue: input === '0' ? '' : `-${input}`
   };
@@ -77,10 +77,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onInputChange: value => dispatch(onInputChange(value)),
   updateOutputValue: value => dispatch(updateOutput(value)),
-  onCurrencyClick: () => dispatch(toggleDropdown(FROM))
+  onCurrencyClick: () => dispatch(toggleDropdown(BASE))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(From);
+)(Base);

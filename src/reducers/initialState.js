@@ -1,10 +1,10 @@
 export default {
   currencies: {
     list: {},
-    isFromOpen: false,
-    isToOpen: false,
-    from: null,
-    to: null,
+    isBaseOpen: false,
+    isQuoteOpen: false,
+    base: null,
+    quote: null,
     input: '0',
     output: 0,
     warning: false,

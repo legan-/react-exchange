@@ -18,13 +18,13 @@ const list = (state = initialState.currencies.list, action) => {
   }
 };
 
-const isFromOpen = (state = initialState.currencies.isFromOpen, action) => {
+const isBaseOpen = (state = initialState.currencies.isBaseOpen, action) => {
   switch (action.type) {
-    case Types.TOGGLE_FROM_DROPDOWN:
+    case Types.TOGGLE_BASE_DROPDOWN:
       return !state;
-    case Types.TOGGLE_TO_DROPDOWN:
-    case Types.CHANGE_FROM_CURRENCY:
-    case Types.CHANGE_TO_CURRENCY:
+    case Types.TOGGLE_QUOTE_DROPDOWN:
+    case Types.CHANGE_BASE_CURRENCY:
+    case Types.CHANGE_QUOTE_CURRENCY:
     case Types.EXCHANGE_REQUEST:
     case Types.UPDATE_INPUT:
       return false;
@@ -33,13 +33,13 @@ const isFromOpen = (state = initialState.currencies.isFromOpen, action) => {
   }
 };
 
-const isToOpen = (state = initialState.currencies.isToOpen, action) => {
+const isQuoteOpen = (state = initialState.currencies.isQuoteOpen, action) => {
   switch (action.type) {
-    case Types.TOGGLE_TO_DROPDOWN:
+    case Types.TOGGLE_QUOTE_DROPDOWN:
       return !state;
-    case Types.TOGGLE_FROM_DROPDOWN:
-    case Types.CHANGE_FROM_CURRENCY:
-    case Types.CHANGE_TO_CURRENCY:
+    case Types.TOGGLE_BASE_DROPDOWN:
+    case Types.CHANGE_BASE_CURRENCY:
+    case Types.CHANGE_QUOTE_CURRENCY:
     case Types.EXCHANGE_REQUEST:
     case Types.UPDATE_INPUT:
       return false;
@@ -48,24 +48,24 @@ const isToOpen = (state = initialState.currencies.isToOpen, action) => {
   }
 };
 
-const from = (state = initialState.currencies.from, action) => {
+const base = (state = initialState.currencies.base, action) => {
   switch (action.type) {
     case Types.SET_CURRENCIES:
       return action.currencies[0].id;
-    case Types.CHANGE_FROM_CURRENCY:
-    case Types.CHANGE_TO_CURRENCY:
+    case Types.CHANGE_BASE_CURRENCY:
+    case Types.CHANGE_QUOTE_CURRENCY:
       return action.base.id;
     default:
       return state;
   }
 };
 
-const to = (state = initialState.currencies.to, action) => {
+const quote = (state = initialState.currencies.quote, action) => {
   switch (action.type) {
     case Types.SET_CURRENCIES:
       return action.currencies[1].id;
-    case Types.CHANGE_FROM_CURRENCY:
-    case Types.CHANGE_TO_CURRENCY:
+    case Types.CHANGE_BASE_CURRENCY:
+    case Types.CHANGE_QUOTE_CURRENCY:
       return action.quote.id;
     default:
       return state;
@@ -110,10 +110,10 @@ const sending = (state = initialState.currencies.sending, action) => {
 
 export default combineReducers({
   list,
-  isFromOpen,
-  isToOpen,
-  from,
-  to,
+  isBaseOpen,
+  isQuoteOpen,
+  base,
+  quote,
   input,
   output,
   warning,

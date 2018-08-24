@@ -1,4 +1,4 @@
-const FROM = 'FROM';
-const TO = 'TO';
+const BASE = 'BASE';
+const QUOTE = 'QUOTE';
 
-export { FROM, TO };
+export { BASE, QUOTE };

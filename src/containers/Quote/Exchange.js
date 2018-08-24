@@ -20,7 +20,7 @@ Exchange.propTypes = {
 
 const mapStateToProps = state => {
   const inputValue = state.currencies.input;
-  const balance = getCurrency(state.currencies.list, state.currencies.from).value || '0';
+  const balance = getCurrency(state.currencies.list, state.currencies.base).value || '0';
 
   const disabled = inputValue === '0' || Number(inputValue) > Number(balance) ? true : false;
 

@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import { getCurrency } from '../../selectors/currencies';
 
-const Rate = ({ rate, fromSign, toSign }) => (
+const Rate = ({ rate, baseSign, quoteSign }) => (
   <div className="rate-container">
     <div className="rate">
-      {fromSign}1 = {toSign}
+      {baseSign}1 = {quoteSign}
       {rate.slice(0, 4)}
       <span>{rate.slice(-2)}</span>
     </div>
@@ -16,16 +16,16 @@ const Rate = ({ rate, fromSign, toSign }) => (
 
 Rate.propTypes = {
   rate: PropTypes.string.isRequired,
-  fromSign: PropTypes.string,
-  toSign: PropTypes.string
+  baseSign: PropTypes.string,
+  quoteSign: PropTypes.string
 };
 
 const mapStateToProps = state => {
   // put logic in here ?
   return {
     rate: state.rates.rate || '0',
-    fromSign: getCurrency(state.currencies.list, state.currencies.from).sign,
-    toSign: getCurrency(state.currencies.list, state.currencies.to).sign
+    baseSign: getCurrency(state.currencies.list, state.currencies.base).sign,
+    quoteSign: getCurrency(state.currencies.list, state.currencies.quote).sign
   };
 };
 

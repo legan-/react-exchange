@@ -31,24 +31,24 @@ const updateOutput = output => ({
   output
 });
 
-const toggleFromDropdown = () => ({
-  type: Types.TOGGLE_FROM_DROPDOWN
+const toggleBaseDropdown = () => ({
+  type: Types.TOGGLE_BASE_DROPDOWN
 });
 
-const toggleToDropdown = () => ({
-  type: Types.TOGGLE_TO_DROPDOWN
+const toggleQuoteDropdown = () => ({
+  type: Types.TOGGLE_QUOTE_DROPDOWN
 });
 
-const changeFromCurrency = (base, quote, state, time) => ({
-  type: Types.CHANGE_FROM_CURRENCY,
+const changeBaseCurrency = (base, quote, state, time) => ({
+  type: Types.CHANGE_BASE_CURRENCY,
   base,
   quote,
   state,
   time
 });
 
-const changeToCurrency = (base, quote, state, time) => ({
-  type: Types.CHANGE_TO_CURRENCY,
+const changeQuoteCurrency = (base, quote, state, time) => ({
+  type: Types.CHANGE_QUOTE_CURRENCY,
   base,
   quote,
   state,
@@ -74,10 +74,10 @@ export {
   setCurrencies,
   updateInput,
   updateOutput,
-  toggleFromDropdown,
-  toggleToDropdown,
-  changeFromCurrency,
-  changeToCurrency,
+  toggleBaseDropdown,
+  toggleQuoteDropdown,
+  changeBaseCurrency,
+  changeQuoteCurrency,
   exchangeRequest,
   exchangeSuccess,
   exchangeError

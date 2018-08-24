@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { FROM } from '../../constants/DataTypes';
+import { BASE } from '../../constants/DataTypes';
 
 import Element from '../../components/Dropdown/Element';
 
@@ -11,7 +11,7 @@ import { switchCurrency } from '../../actions';
 const Dropdown = ({ list, active, type, onCurrencyClick }) => {
   let ul;
 
-  const currencyType = type === FROM ? 'base' : 'quote';
+  const currencyType = type === BASE ? 'base' : 'quote';
 
   if (active) {
     ul = (
@@ -37,21 +37,21 @@ Dropdown.propTypes = {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       sign: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    }),
+      value: PropTypes.string.isRequired
+    })
   ).isRequired,
   active: PropTypes.bool.isRequired,
   type: PropTypes.string,
-  onCurrencyClick: PropTypes.func.isRequired,
+  onCurrencyClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  onCurrencyClick: (id, type) => dispatch(switchCurrency(id, type)),
+  onCurrencyClick: (id, type) => dispatch(switchCurrency(id, type))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Dropdown);

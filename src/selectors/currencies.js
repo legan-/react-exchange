@@ -1,4 +1,4 @@
-const getCurrency = (type, id) => type[id] || {};
+const getCurrency = (list, name) => list[name] || {};
 
 const getCurrenciesList = state => Object.values(state);
 

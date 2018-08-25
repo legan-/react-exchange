@@ -14,8 +14,8 @@ const rate = (state = initialState.rates.rate, action) => {
 
 const updatedAt = (state = initialState.rates.updatedAt, action) => {
   switch (action.type) {
-    case Types.CHANGE_FROM_CURRENCY:
-    case Types.CHANGE_TO_CURRENCY:
+    case Types.CHANGE_BASE_CURRENCY:
+    case Types.CHANGE_QUOTE_CURRENCY:
       return action.time;
     default:
       return state;

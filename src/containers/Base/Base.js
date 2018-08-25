@@ -4,80 +4,72 @@ import { connect } from 'react-redux';
 
 import { BASE } from '../../constants/DataTypes';
 
-import Currency from '../../components/common/Currency';
-import Dropdown from '../Dropdown';
+import { Currency } from '../../components/common';
+import { Input } from '../../components/Base';
+import Dropdown from '../../components/Dropdown';
 
-import { toggleDropdown, onInputChange } from '../../actions';
-import { updateOutput } from '../../actions/actionCreators';
+import { showDropdown, hideDropdown } from '../../actions/dropdown';
+import { onInputChange } from '../../actions/input';
+import { switchCurrency } from '../../actions/currencies';
 import { getCurrency, getCurrenciesList } from '../../selectors/currencies';
 
 const Base = ({
   currency,
   currenciesList,
-  onInputChange,
-  updateOutputValue,
-  onCurrencyClick,
   isDropdownActive,
-  currentInput,
-  inputValue
+  inputValue,
+  warning,
+  onInputChange,
+  onCurrencyClick,
+  onCurrencyListItemClick,
+  onBackgroundClick
 }) => {
-  const warning = Number(currentInput) > Number(currency.value) ? true : false;
-
   return (
     <div className="block base-block">
       <div className="control">
-        <Currency
-          name={currency.name}
-          sign={currency.sign}
-          value={currency.value}
-          warning={warning}
-          onCurrencyClick={onCurrencyClick}
-        />
-        <input
-          className="input"
-          type="text"
-          placeholder="0"
-          value={inputValue}
-          onChange={onInputChange}
-        />
+        <Currency {...currency} warning={warning} onClick={onCurrencyClick} />
+        <Input value={inputValue} onChange={onInputChange} />
       </div>
-      <Dropdown list={currenciesList} active={isDropdownActive} type={BASE} />
+      <Dropdown
+        list={currenciesList}
+        active={isDropdownActive}
+        type={BASE}
+        onElementClick={onCurrencyListItemClick}
+        onBackgroundClick={onBackgroundClick}
+      />
     </div>
   );
 };
 
 Base.propTypes = {
-  currency: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    sign: PropTypes.string,
-    value: PropTypes.string
-  }).isRequired,
+  currency: PropTypes.object.isRequired,
   currenciesList: PropTypes.array.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  updateOutputValue: PropTypes.func.isRequired,
-  onCurrencyClick: PropTypes.func.isRequired,
   isDropdownActive: PropTypes.bool.isRequired,
-  currentInput: PropTypes.string.isRequired,
-  inputValue: PropTypes.string.isRequired
+  inputValue: PropTypes.string.isRequired,
+  warning: PropTypes.bool.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  onCurrencyClick: PropTypes.func.isRequired,
+  onCurrencyListItemClick: PropTypes.func.isRequired,
+  onBackgroundClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
-  const { list, base, input, isBaseOpen } = state.currencies;
+  const { list, base, input, isBaseOpen, warning } = state.currencies;
 
   return {
-    currency: getCurrency(list, base),
+    currency: (({ name, sign, value }) => ({ name, sign, value }))(getCurrency(list, base)),
     currenciesList: getCurrenciesList(list),
     isDropdownActive: isBaseOpen,
-    currentInput: input,
-    inputValue: input === '0' ? '' : `-${input}`
+    inputValue: input === '0' ? '' : `-${input}`,
+    warning
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   onInputChange: value => dispatch(onInputChange(value)),
-  updateOutputValue: value => dispatch(updateOutput(value)),
-  onCurrencyClick: () => dispatch(toggleDropdown(BASE))
+  onCurrencyClick: () => dispatch(showDropdown(BASE)),
+  onCurrencyListItemClick: (id, type) => dispatch(switchCurrency(id, type)),
+  onBackgroundClick: () => dispatch(hideDropdown())
 });
 
 export default connect(

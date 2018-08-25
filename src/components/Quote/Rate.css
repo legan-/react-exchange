@@ -1,0 +1,29 @@
+.rate-container {
+  left: 0;
+  position: absolute;
+  top: -14px;
+  width: 100%;
+}
+
+.rate {
+  background-color: #fff;
+  border: 2px solid #fafafa;
+  border-radius: 20px;
+  color: #2445f6;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.6px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 4px 8px;
+  width: 160px;
+}
+
+.rate div {
+  display: inline-block;
+}
+
+.rate span {
+  font-size: 12px;
+}

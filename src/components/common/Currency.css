@@ -1,0 +1,28 @@
+.currency {
+  cursor: pointer;
+  position: relative;
+}
+
+.currency::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+  position: relative;
+  left: 6px;
+  top: 16px;
+}
+
+.balance {
+  color: #999;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+}
+
+.balance.warning {
+  color: #f3007d;
+}

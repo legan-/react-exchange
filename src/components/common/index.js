@@ -1,7 +1,4 @@
-import Dropdown from './Dropdown';
+import './Currency.css';
 import Currency from './Currency';
 
-export default {
-  Dropdown,
-  Currency,
-};
+export { Currency };

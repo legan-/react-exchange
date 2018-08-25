@@ -4,54 +4,96 @@ import { connect } from 'react-redux';
 
 import { QUOTE } from '../../constants/DataTypes';
 
-import Currency from '../../components/common/Currency';
-import Rate from './Rate';
-import Dropdown from '../Dropdown/';
-import Exchange from './Exchange';
+import { Currency } from '../../components/common';
+import { Exchange, Output, Rate } from '../../components/Quote';
+import Dropdown from '../../components/Dropdown';
 
-import { toggleDropdown } from '../../actions';
+import { showDropdown, hideDropdown } from '../../actions/dropdown';
+import { submitExchange } from '../../actions/submit';
+import { switchCurrency } from '../../actions/currencies';
 import { getCurrency, getCurrenciesList } from '../../selectors/currencies';
 
-const Quote = ({ currency, currenciesList, output, onCurrencyClick, isDropdownActive }) => (
+const Quote = ({
+  rate,
+  currency,
+  currenciesList,
+  output,
+  isDropdownActive,
+  exchange,
+  onCurrencyClick,
+  onExchangeClick,
+  onCurrencyListItemClick,
+  onBackgroundClick
+}) => (
   <div className="block quote-block">
-    <Rate />
+    <Rate {...rate} />
     <div className="control">
-      <Currency
-        name={currency.name}
-        sign={currency.sign}
-        value={currency.value}
-        warning={false}
-        onCurrencyClick={onCurrencyClick}
-      />
-      <div className="output">{output ? `+ ${output}` : 0}</div>
+      <Currency {...currency} warning={false} onClick={onCurrencyClick} />
+      <Output output={output} />
     </div>
-    <Dropdown list={currenciesList} active={isDropdownActive} type={QUOTE} />
-    <Exchange />
+    <Dropdown
+      list={currenciesList}
+      active={isDropdownActive}
+      type={QUOTE}
+      onElementClick={onCurrencyListItemClick}
+      onBackgroundClick={onBackgroundClick}
+    />
+    <Exchange {...exchange} onClick={onExchangeClick} />
   </div>
 );
 
 Quote.propTypes = {
+  rate: PropTypes.shape({
+    rate: PropTypes.string.isRequired,
+    baseSign: PropTypes.string,
+    quoteSign: PropTypes.string
+  }).isRequired,
   currency: PropTypes.shape({
-    id: PropTypes.number,
     name: PropTypes.string,
     sign: PropTypes.string,
     value: PropTypes.string
   }).isRequired,
   currenciesList: PropTypes.array.isRequired,
-  output: PropTypes.number.isRequired,
+  output: PropTypes.string.isRequired,
+  isDropdownActive: PropTypes.bool.isRequired,
+  exchange: PropTypes.shape({
+    disabled: PropTypes.bool.isRequired,
+    text: PropTypes.string.isRequired
+  }).isRequired,
   onCurrencyClick: PropTypes.func.isRequired,
-  isDropdownActive: PropTypes.bool.isRequired
+  onExchangeClick: PropTypes.func.isRequired,
+  onCurrencyListItemClick: PropTypes.func.isRequired,
+  onBackgroundClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  currency: getCurrency(state.currencies.list, state.currencies.quote),
-  currenciesList: getCurrenciesList(state.currencies.list),
-  isDropdownActive: state.currencies.isQuoteOpen,
-  output: state.currencies.output
-});
+const mapStateToProps = state => {
+  const { input, output, sending, warning, list, base, quote, isQuoteOpen } = state.currencies;
+
+  const baseCurrency = getCurrency(list, base);
+  const quoteCurrency = getCurrency(list, quote);
+
+  return {
+    currency: (({ name, sign, value }) => ({ name, sign, value }))(quoteCurrency),
+    currenciesList: getCurrenciesList(list),
+    isDropdownActive: isQuoteOpen,
+    output: `${parseInt(output, 10) > 0 ? '+' : ''} ${output}`,
+    exchange: {
+      disabled: warning || sending || input === '0',
+      text: sending ? 'Sending...' : 'Exchange'
+    },
+    rate: {
+      rate: state.rates.rate || '0',
+      baseSign: baseCurrency.sign,
+      quoteSign: quoteCurrency.sign
+    }
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
-  onCurrencyClick: () => dispatch(toggleDropdown(QUOTE))
+  onCurrencyClick: () => dispatch(showDropdown(QUOTE)),
+  onExchangeClick: () => dispatch(submitExchange()),
+  onCurrencyListItemClick: (id, type) => dispatch(switchCurrency(id, type)),
+  onBackgroundClick: () => dispatch(hideDropdown())
 });
 
 export default connect(

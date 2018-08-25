@@ -1,45 +1,49 @@
 import Types from '../constants/ActionTypes';
 
-const recieveCurrenciesSuccess = currencies => ({
+export const recieveCurrenciesSuccess = currencies => ({
   type: Types.RECEIVE_CURRENCIES_SUCCESS,
   currencies
 });
 
-const receiveRatesSuccess = (rates, rate) => ({
+export const receiveRatesSuccess = (rates, rate) => ({
   type: Types.RECEIVE_RATES_SUCCESS,
   rates,
   rate
 });
 
-const hasFewCurrencies = currencies => ({
+export const hasFewCurrencies = currencies => ({
   type: Types.HAS_FEW_CURRENCIES,
   currencies
 });
 
-const setCurrencies = currencies => ({
+export const setCurrencies = currencies => ({
   type: Types.SET_CURRENCIES,
   currencies
 });
 
-const updateInput = input => ({
+export const updateInput = input => ({
   type: Types.UPDATE_INPUT,
   input
 });
 
-const updateOutput = output => ({
+export const updateOutput = output => ({
   type: Types.UPDATE_OUTPUT,
   output
 });
 
-const toggleBaseDropdown = () => ({
-  type: Types.TOGGLE_BASE_DROPDOWN
+export const showBaseDropdown = () => ({
+  type: Types.SHOW_BASE_DROPDOWN
 });
 
-const toggleQuoteDropdown = () => ({
-  type: Types.TOGGLE_QUOTE_DROPDOWN
+export const showQuoteDropdown = () => ({
+  type: Types.SHOW_QUOTE_DROPDOWN
 });
 
-const changeBaseCurrency = (base, quote, state, time) => ({
+export const hideDropdown = () => ({
+  type: Types.HIDE_DROPDOWN
+});
+
+export const changeBaseCurrency = (base, quote, state, time) => ({
   type: Types.CHANGE_BASE_CURRENCY,
   base,
   quote,
@@ -47,7 +51,7 @@ const changeBaseCurrency = (base, quote, state, time) => ({
   time
 });
 
-const changeQuoteCurrency = (base, quote, state, time) => ({
+export const changeQuoteCurrency = (base, quote, state, time) => ({
   type: Types.CHANGE_QUOTE_CURRENCY,
   base,
   quote,
@@ -55,30 +59,19 @@ const changeQuoteCurrency = (base, quote, state, time) => ({
   time
 });
 
-const exchangeRequest = () => ({
+export const updateWarning = warning => ({
+  type: Types.UPDATE_WARNING,
+  warning
+});
+
+export const exchangeRequest = () => ({
   type: Types.EXCHANGE_REQUEST
 });
 
-const exchangeSuccess = () => ({
+export const exchangeSuccess = () => ({
   type: Types.EXCHANGE_SUCCESS
 });
 
-const exchangeError = () => ({
+export const exchangeError = () => ({
   type: Types.EXCHANGE_ERROR
 });
-
-export {
-  recieveCurrenciesSuccess,
-  receiveRatesSuccess,
-  hasFewCurrencies,
-  setCurrencies,
-  updateInput,
-  updateOutput,
-  toggleBaseDropdown,
-  toggleQuoteDropdown,
-  changeBaseCurrency,
-  changeQuoteCurrency,
-  exchangeRequest,
-  exchangeSuccess,
-  exchangeError
-};

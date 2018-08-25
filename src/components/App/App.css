@@ -1,0 +1,47 @@
+.container {
+  min-width: 400px;
+  max-width: 500px;
+  position: relative;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 300;
+}
+
+.block {
+  padding: 30px 20px;
+  position: relative;
+}
+
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.control > * {
+  width: 50%;
+}
+
+.input,
+.output,
+.currency {
+  color: #222;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0.8px;
+}
+
+.input {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+.input,
+.output {
+  text-align: right;
+}

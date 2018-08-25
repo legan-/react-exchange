@@ -20,9 +20,10 @@ const list = (state = initialState.currencies.list, action) => {
 
 const isBaseOpen = (state = initialState.currencies.isBaseOpen, action) => {
   switch (action.type) {
-    case Types.TOGGLE_BASE_DROPDOWN:
+    case Types.SHOW_BASE_DROPDOWN:
       return !state;
-    case Types.TOGGLE_QUOTE_DROPDOWN:
+    case Types.HIDE_DROPDOWN:
+    case Types.SHOW_QUOTE_DROPDOWN:
     case Types.CHANGE_BASE_CURRENCY:
     case Types.CHANGE_QUOTE_CURRENCY:
     case Types.EXCHANGE_REQUEST:
@@ -35,9 +36,10 @@ const isBaseOpen = (state = initialState.currencies.isBaseOpen, action) => {
 
 const isQuoteOpen = (state = initialState.currencies.isQuoteOpen, action) => {
   switch (action.type) {
-    case Types.TOGGLE_QUOTE_DROPDOWN:
+    case Types.SHOW_QUOTE_DROPDOWN:
       return !state;
-    case Types.TOGGLE_BASE_DROPDOWN:
+    case Types.HIDE_DROPDOWN:
+    case Types.SHOW_BASE_DROPDOWN:
     case Types.CHANGE_BASE_CURRENCY:
     case Types.CHANGE_QUOTE_CURRENCY:
     case Types.EXCHANGE_REQUEST:
@@ -77,7 +79,7 @@ const input = (state = initialState.currencies.input, action) => {
     case Types.UPDATE_INPUT:
       return action.input;
     case Types.EXCHANGE_SUCCESS:
-      return '';
+      return initialState.currencies.input;
     default:
       return state;
   }
@@ -88,7 +90,7 @@ const output = (state = initialState.currencies.output, action) => {
     case Types.UPDATE_OUTPUT:
       return action.output;
     case Types.EXCHANGE_SUCCESS:
-      return initialState.currencies.input;
+      return initialState.currencies.output;
     default:
       return state;
   }
@@ -96,6 +98,8 @@ const output = (state = initialState.currencies.output, action) => {
 
 const warning = (state = initialState.currencies.warning, action) => {
   switch (action.type) {
+    case Types.UPDATE_WARNING:
+      return action.warning;
     default:
       return state;
   }
@@ -103,6 +107,10 @@ const warning = (state = initialState.currencies.warning, action) => {
 
 const sending = (state = initialState.currencies.sending, action) => {
   switch (action.type) {
+    case Types.EXCHANGE_REQUEST:
+      return true;
+    case Types.EXCHANGE_SUCCESS:
+      return false;
     default:
       return state;
   }

@@ -1,5 +1,4 @@
-import Element from './Element';
+import './Dropdown.css';
+import Dropdown from './Dropdown';
 
-export default {
-  Element,
-};
+export default Dropdown;

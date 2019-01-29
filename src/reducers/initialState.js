@@ -1,5 +1,7 @@
 export default {
   currencies: {
+    isLoading: false,
+    isReceived: false,
     list: {},
     isBaseOpen: false,
     isQuoteOpen: false,

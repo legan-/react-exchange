@@ -2,12 +2,15 @@ import React from 'react';
 import * as TYPES from 'prop-types';
 
 Container.propTypes = {
-  children: TYPES.node.isRequired
+  children: TYPES.node.isRequired,
+  isDisplayed: TYPES.bool.isRequired
 };
 
-function Container({ children }) {
+function Container({ children, isDisplayed }) {
+  const className = `container ${ isDisplayed ? 'show' : 'hide' }`
+
   return (
-    <div className='container'>
+    <div className={ className }>
       <h2>Exchange</h2>
       { children }
     </div>

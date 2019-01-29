@@ -13,11 +13,12 @@
   border-top: 5px solid black;
   position: relative;
   left: 6px;
-  top: 16px;
+  top: 18px;
 }
 
 .balance {
   color: #999;
+  cursor: default;
   font-size: 12px;
   font-weight: 300;
   letter-spacing: 0.5px;

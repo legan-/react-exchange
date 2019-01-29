@@ -11,7 +11,7 @@ const getRates = base => (dispatch, getState) => {
         const quoteId = getState().currencies.quote;
         const quoteName = getState().currencies.list[quoteId].name;
         const rate = rates[quoteName].toFixed(4);
-        dispatch(actions.receiveRatesSuccess(rates, rate));
+        dispatch(actions.ratesReceivedSuccess(rates, rate));
 
         dispatch(calcAndUpdateOutput());
       }
@@ -26,11 +26,11 @@ export const startRateListener = () => (dispatch, getState) => {
     const base = getState().currencies.list[getState().currencies.base].name;
 
     dispatch(getRates(base));
-    setTimeout(() => {
-      if (getState().rates.updatedAt === time) {
-        update(getState().rates.updatedAt);
-      }
+
+    if (getState().currencies.isReceived) setTimeout(() => {
+      if (getState().rates.updatedAt === time) update(getState().rates.updatedAt);
     }, 5000);
   };
+
   update(getState().rates.updatedAt);
 };

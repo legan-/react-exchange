@@ -16,14 +16,17 @@ const setReceivedCurrencies = data => dispatch => {
 };
 
 export const getCurrencies = () => dispatch => {
+  dispatch(actions.receiveCurrencies());
+
   api
     .fetchCurrencies()
     .then(data => {
-      dispatch(actions.recieveCurrenciesSuccess(data));
+      dispatch(actions.currenciesReceivedSuccess(data));
       dispatch(setReceivedCurrencies(data));
     })
     .catch(error => {
-      throw error;
+      dispatch(actions.currenciesReceivedFail());
+      console.error(error);
     });
 };
 

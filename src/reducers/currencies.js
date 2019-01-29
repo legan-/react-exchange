@@ -3,9 +3,32 @@ import { combineReducers } from 'redux';
 import initialState from './initialState';
 import Types from '../constants/ActionTypes';
 
+const isLoading = (state = initialState.currencies.isLoading, action) => {
+  switch (action.type) {
+    case Types.RECEIVE_CURRENCIES:
+      return true;
+    case Types.CURRENCIES_RECEIVED_SUCCESS:
+    case Types.CURRENCIES_RECEIVED_FAIL:
+      return false;
+    default:
+      return state;
+  }
+};
+
+const isReceived = (state = initialState.currencies.isReceived, action) => {
+  switch (action.type) {
+    case Types.CURRENCIES_RECEIVED_SUCCESS:
+      return true;
+    case Types.CURRENCIES_RECEIVED_FAIL:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const list = (state = initialState.currencies.list, action) => {
   switch (action.type) {
-    case Types.RECEIVE_CURRENCIES_SUCCESS:
+    case Types.CURRENCIES_RECEIVED_SUCCESS:
       return {
         ...state,
         ...action.currencies.reduce((obj, currency) => {
@@ -117,6 +140,8 @@ const sending = (state = initialState.currencies.sending, action) => {
 };
 
 export default combineReducers({
+  isLoading,
+  isReceived,
   list,
   isBaseOpen,
   isQuoteOpen,

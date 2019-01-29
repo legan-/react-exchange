@@ -14,7 +14,7 @@ Currency.defaultProps = {
 };
 
 function Currency({ name, sign, value, warning, onClick }) {
-  const className = warning ? 'balance warning' : 'balance';
+  const className = `balance ${ warning ? 'warning' : '' }`;
 
   return (
     <div>

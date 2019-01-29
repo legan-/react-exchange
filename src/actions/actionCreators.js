@@ -1,12 +1,20 @@
 import Types from '../constants/ActionTypes';
 
-export const recieveCurrenciesSuccess = currencies => ({
-  type: Types.RECEIVE_CURRENCIES_SUCCESS,
+export const receiveCurrencies = () => ({
+  type: Types.RECEIVE_CURRENCIES
+});
+
+export const currenciesReceivedSuccess = currencies => ({
+  type: Types.CURRENCIES_RECEIVED_SUCCESS,
   currencies
 });
 
-export const receiveRatesSuccess = (rates, rate) => ({
-  type: Types.RECEIVE_RATES_SUCCESS,
+export const currenciesReceivedFail = () => ({
+  type: Types.CURRENCIES_RECEIVED_FAIL
+});
+
+export const ratesReceivedSuccess = (rates, rate) => ({
+  type: Types.RATES_RECEIVED_SUCCESS,
   rates,
   rate
 });

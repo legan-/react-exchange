@@ -29,12 +29,12 @@ function Dropdown ({
   return isActive && (
     <div className='dropdown' onClick={ onBackgroundClick }>
       <ul>
-        <p>Choose { type.toLowerCase() } currency:</p>
+        <p>Choose a { type.toLowerCase() } currency:</p>
         {
           list.map(({ id, name, flag, value }) => (
-            <li onClick={ () => onElementClick(id, type) }>
+            <li key={ id } onClick={ () => onElementClick(id, type) }>
               <Flag name={ flag } />
-              { name } - { value }
+              { name }: { value }
             </li>
           ))
         }

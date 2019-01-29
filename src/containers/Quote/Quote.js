@@ -1,10 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import * as TYPES from 'prop-types';
 import { connect } from 'react-redux';
 
 import { QUOTE } from '../../constants/DataTypes';
 
-import { Block, Currency, Control, Dropdown } from '../../components/common';
+import {
+  Block,
+  Currency,
+  Control,
+  Dropdown
+} from '../../components/common';
 import { ExchangeBtn, Output, Rate } from '../../components/Quote';
 
 import { showDropdown, hideDropdown } from '../../actions/dropdown';
@@ -18,27 +23,27 @@ import {
 } from '../../selectors';
 
 Quote.propTypes = {
-  rate: PropTypes.shape({
-    rate: PropTypes.string.isRequired,
-    baseSign: PropTypes.string.isRequired,
-    quoteSign: PropTypes.string.isRequired
+  rate: TYPES.shape({
+    rate: TYPES.string.isRequired,
+    baseSign: TYPES.string.isRequired,
+    quoteSign: TYPES.string.isRequired
   }).isRequired,
-  currency: PropTypes.shape({
-    name: PropTypes.string,
-    sign: PropTypes.string,
-    value: PropTypes.string
+  currency: TYPES.shape({
+    name: TYPES.string,
+    sign: TYPES.string,
+    value: TYPES.string
   }).isRequired,
-  currenciesList: PropTypes.array.isRequired,
-  output: PropTypes.string.isRequired,
-  isDropdownActive: PropTypes.bool.isRequired,
-  exchange: PropTypes.shape({
-    isDisabled: PropTypes.bool.isRequired,
-    text: PropTypes.string.isRequired
+  currenciesList: TYPES.array.isRequired,
+  output: TYPES.string.isRequired,
+  isDropdownActive: TYPES.bool.isRequired,
+  exchange: TYPES.shape({
+    isDisabled: TYPES.bool.isRequired,
+    text: TYPES.string.isRequired
   }).isRequired,
-  onCurrencyClick: PropTypes.func.isRequired,
-  onExchangeClick: PropTypes.func.isRequired,
-  onCurrencyListItemClick: PropTypes.func.isRequired,
-  onBackgroundClick: PropTypes.func.isRequired
+  onCurrencyClick: TYPES.func.isRequired,
+  onExchangeClick: TYPES.func.isRequired,
+  onCurrencyListItemClick: TYPES.func.isRequired,
+  onBackgroundClick: TYPES.func.isRequired
 };
 
 function Quote ({

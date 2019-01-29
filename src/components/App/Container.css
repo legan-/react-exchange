@@ -2,18 +2,32 @@
   min-width: 400px;
   max-width: 500px;
   position: relative;
+  -webkit-transition: .4s ease-in-out .3s;
+  -moz-transition: .4s ease-in-out .3s;
+  -o-transition: .4s ease-in-out .3s;
+  transition: .4s ease-in-out .3s;
+}
+
+.hide {
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
 }
 
 h2 {
-  text-align: center;
+  cursor: default;
   font-weight: 300;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
 }
 
 .input,
 .output,
 .currency {
   color: #222;
-  cursor: pointer;
   font-size: 24px;
   font-weight: 300;
   letter-spacing: 0.8px;

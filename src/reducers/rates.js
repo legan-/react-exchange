@@ -5,7 +5,7 @@ import Types from '../constants/ActionTypes';
 
 const rate = (state = initialState.rates.rate, action) => {
   switch (action.type) {
-    case Types.RECEIVE_RATES_SUCCESS:
+    case Types.RATES_RECEIVED_SUCCESS:
       return action.rate;
     default:
       return state;
@@ -24,7 +24,7 @@ const updatedAt = (state = initialState.rates.updatedAt, action) => {
 
 const list = (state = initialState.rates.list, action) => {
   switch (action.type) {
-    case Types.RECEIVE_RATES_SUCCESS:
+    case Types.RATES_RECEIVED_SUCCESS:
       return {
         ...action.rates
       };

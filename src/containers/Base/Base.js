@@ -1,10 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import * as TYPES from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BASE } from '../../constants/DataTypes';
 
-import { Block, Currency, Control, Dropdown } from '../../components/common';
+import {
+  Block,
+  Currency,
+  Control,
+  Dropdown
+} from '../../components/common';
 import { Input } from '../../components/Base';
 
 import { showDropdown, hideDropdown } from '../../actions/dropdown';
@@ -17,15 +22,15 @@ import {
 } from '../../selectors';
 
 Base.propTypes = {
-  currency: PropTypes.object.isRequired,
-  currenciesList: PropTypes.array.isRequired,
-  isDropdownActive: PropTypes.bool.isRequired,
-  inputValue: PropTypes.string.isRequired,
-  warning: PropTypes.bool.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  onCurrencyClick: PropTypes.func.isRequired,
-  onCurrencyListItemClick: PropTypes.func.isRequired,
-  onBackgroundClick: PropTypes.func.isRequired
+  currency: TYPES.object.isRequired,
+  currenciesList: TYPES.array.isRequired,
+  isDropdownActive: TYPES.bool.isRequired,
+  inputValue: TYPES.string.isRequired,
+  warning: TYPES.bool.isRequired,
+  onInputChange: TYPES.func.isRequired,
+  onCurrencyClick: TYPES.func.isRequired,
+  onCurrencyListItemClick: TYPES.func.isRequired,
+  onBackgroundClick: TYPES.func.isRequired
 };
 
 function Base({

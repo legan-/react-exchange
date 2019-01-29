@@ -1,0 +1,8 @@
+.warning-message {
+  font-size: 18px;
+  font-weight: 300;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;  
+}

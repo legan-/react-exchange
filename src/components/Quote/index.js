@@ -1,8 +1,12 @@
-import './Exchange.css';
+import './ExchangeBtn.css';
 import './Rate.css';
 
-import Exchange from './Exchange';
+import ExchangeBtn from './ExchangeBtn';
 import Output from './Output';
 import Rate from './Rate';
 
-export { Exchange, Output, Rate };
+export {
+  ExchangeBtn,
+  Output,
+  Rate
+};

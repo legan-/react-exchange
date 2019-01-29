@@ -1,20 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-const Rate = ({ rate, baseSign, quoteSign }) => (
-  <div className="rate-container">
-    <div className="rate">
-      {baseSign}1 = {quoteSign}
-      {rate.slice(0, 4)}
-      <span>{rate.slice(-2)}</span>
-    </div>
-  </div>
-);
+import * as TYPES from 'prop-types';
 
 Rate.propTypes = {
-  rate: PropTypes.string.isRequired,
-  baseSign: PropTypes.string,
-  quoteSign: PropTypes.string
+  rate: TYPES.string.isRequired,
+  baseSign: TYPES.string,
+  quoteSign: TYPES.string
 };
+
+function Rate({ rate, baseSign, quoteSign }) {
+  return (
+    <div className='rate-container'>
+      <div className='rate'>
+        { baseSign }1 = { quoteSign }
+        { rate.slice(0, 4) }
+        <span>{ rate.slice(-2) }</span>
+      </div>
+    </div>
+  );
+}
 
 export default Rate;

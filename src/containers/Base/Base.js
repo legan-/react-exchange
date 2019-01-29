@@ -4,42 +4,17 @@ import { connect } from 'react-redux';
 
 import { BASE } from '../../constants/DataTypes';
 
-import { Currency } from '../../components/common';
+import { Block, Currency, Control, Dropdown } from '../../components/common';
 import { Input } from '../../components/Base';
-import Dropdown from '../../components/Dropdown';
 
 import { showDropdown, hideDropdown } from '../../actions/dropdown';
 import { onInputChange } from '../../actions/input';
 import { switchCurrency } from '../../actions/currencies';
-import { getCurrency, getCurrenciesList } from '../../selectors/currencies';
-
-const Base = ({
-  currency,
-  currenciesList,
-  isDropdownActive,
-  inputValue,
-  warning,
-  onInputChange,
-  onCurrencyClick,
-  onCurrencyListItemClick,
-  onBackgroundClick
-}) => {
-  return (
-    <div className="block base-block">
-      <div className="control">
-        <Currency {...currency} warning={warning} onClick={onCurrencyClick} />
-        <Input value={inputValue} onChange={onInputChange} />
-      </div>
-      <Dropdown
-        list={currenciesList}
-        active={isDropdownActive}
-        type={BASE}
-        onElementClick={onCurrencyListItemClick}
-        onBackgroundClick={onBackgroundClick}
-      />
-    </div>
-  );
-};
+import {
+  getCurrency,
+  getCurrenciesList,
+  parseInput
+} from '../../selectors';
 
 Base.propTypes = {
   currency: PropTypes.object.isRequired,
@@ -53,14 +28,55 @@ Base.propTypes = {
   onBackgroundClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
-  const { list, base, input, isBaseOpen, warning } = state.currencies;
+function Base({
+  currency,
+  currenciesList,
+  isDropdownActive,
+  inputValue,
+  warning,
+  onInputChange,
+  onCurrencyClick,
+  onCurrencyListItemClick,
+  onBackgroundClick
+}) {
+  return (
+    <Block type='base'>
+      <Control>
+        <Currency
+          { ...currency }
+          warning={ warning }
+          onClick={ onCurrencyClick }
+        />
+        <Input
+          value={ inputValue }
+          onChange={ onInputChange }
+        />
+      </Control>
+      <Dropdown
+        list={ currenciesList }
+        isActive={ isDropdownActive }
+        type={ BASE }
+        onElementClick={ onCurrencyListItemClick }
+        onBackgroundClick={ onBackgroundClick }
+      />
+    </Block>
+  );
+};
+
+const mapStateToProps = ({ currencies }) => {
+  const {
+    list,
+    base,
+    input,
+    isBaseOpen,
+    warning
+  } = currencies;
 
   return {
     currency: (({ name, sign, value }) => ({ name, sign, value }))(getCurrency(list, base)),
     currenciesList: getCurrenciesList(list),
     isDropdownActive: isBaseOpen,
-    inputValue: input === '0' ? '' : `-${input}`,
+    inputValue: parseInput(input),
     warning
   };
 };

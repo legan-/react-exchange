@@ -1,5 +1,5 @@
 import * as actions from './actionCreators';
-import { getCurrency } from '../selectors/currencies';
+import { getCurrency } from '../selectors';
 import { calcAndUpdateOutput } from './output';
 
 const formattedInput = input => {

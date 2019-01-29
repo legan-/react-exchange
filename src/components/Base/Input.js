@@ -1,13 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-const Input = ({ value, onChange }) => (
-  <input className="input" type="text" placeholder="0" value={value} onChange={onChange} />
-);
+import * as TYPES from 'prop-types';
 
 Input.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  value: TYPES.string.isRequired,
+  onChange: TYPES.func.isRequired
 };
+
+function Input ({ value, onChange }) {
+  return (
+    <input
+      className='input'
+      type='text'
+      placeholder='0'
+      value={ value }
+      onChange={ onChange }
+    />
+  ); 
+}
 
 export default Input;

@@ -9,21 +9,6 @@ h2 {
   font-weight: 300;
 }
 
-.block {
-  padding: 30px 20px;
-  position: relative;
-}
-
-.control {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.control > * {
-  width: 50%;
-}
-
 .input,
 .output,
 .currency {

@@ -4,49 +4,24 @@ import { connect } from 'react-redux';
 
 import { QUOTE } from '../../constants/DataTypes';
 
-import { Currency } from '../../components/common';
-import { Exchange, Output, Rate } from '../../components/Quote';
-import Dropdown from '../../components/Dropdown';
+import { Block, Currency, Control, Dropdown } from '../../components/common';
+import { ExchangeBtn, Output, Rate } from '../../components/Quote';
 
 import { showDropdown, hideDropdown } from '../../actions/dropdown';
 import { submitExchange } from '../../actions/submit';
 import { switchCurrency } from '../../actions/currencies';
-import { getCurrency, getCurrenciesList } from '../../selectors/currencies';
-
-const Quote = ({
-  rate,
-  currency,
-  currenciesList,
-  output,
-  isDropdownActive,
-  exchange,
-  onCurrencyClick,
-  onExchangeClick,
-  onCurrencyListItemClick,
-  onBackgroundClick
-}) => (
-  <div className="block quote-block">
-    <Rate {...rate} />
-    <div className="control">
-      <Currency {...currency} warning={false} onClick={onCurrencyClick} />
-      <Output output={output} />
-    </div>
-    <Dropdown
-      list={currenciesList}
-      active={isDropdownActive}
-      type={QUOTE}
-      onElementClick={onCurrencyListItemClick}
-      onBackgroundClick={onBackgroundClick}
-    />
-    <Exchange {...exchange} onClick={onExchangeClick} />
-  </div>
-);
+import {
+  getCurrency,
+  getCurrenciesList,
+  parseOutput,
+  pickBtnText
+} from '../../selectors';
 
 Quote.propTypes = {
   rate: PropTypes.shape({
     rate: PropTypes.string.isRequired,
-    baseSign: PropTypes.string,
-    quoteSign: PropTypes.string
+    baseSign: PropTypes.string.isRequired,
+    quoteSign: PropTypes.string.isRequired
   }).isRequired,
   currency: PropTypes.shape({
     name: PropTypes.string,
@@ -57,7 +32,7 @@ Quote.propTypes = {
   output: PropTypes.string.isRequired,
   isDropdownActive: PropTypes.bool.isRequired,
   exchange: PropTypes.shape({
-    disabled: PropTypes.bool.isRequired,
+    isDisabled: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired
   }).isRequired,
   onCurrencyClick: PropTypes.func.isRequired,
@@ -66,8 +41,51 @@ Quote.propTypes = {
   onBackgroundClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
-  const { input, output, sending, warning, list, base, quote, isQuoteOpen } = state.currencies;
+function Quote ({
+  rate,
+  currency,
+  currenciesList,
+  output,
+  isDropdownActive,
+  exchange,
+  onCurrencyClick,
+  onExchangeClick,
+  onCurrencyListItemClick,
+  onBackgroundClick
+}) {
+  return (
+    <Block type='quote'>
+      <Rate { ...rate } />
+      <Control>
+        <Currency
+          { ...currency }
+          onClick={ onCurrencyClick }
+        />
+        <Output output={ output } />
+      </Control>
+      <Dropdown
+        list={ currenciesList }
+        isActive={ isDropdownActive }
+        type={ QUOTE }
+        onElementClick={ onCurrencyListItemClick }
+        onBackgroundClick={ onBackgroundClick }
+      />
+      <ExchangeBtn { ...exchange } onClick={ onExchangeClick } />
+    </Block>
+  );
+}
+
+const mapStateToProps = ({ currencies, rates }) => {
+  const {
+    input,
+    output,
+    sending,
+    warning,
+    list,
+    base,
+    quote,
+    isQuoteOpen
+  } = currencies;
 
   const baseCurrency = getCurrency(list, base);
   const quoteCurrency = getCurrency(list, quote);
@@ -76,13 +94,13 @@ const mapStateToProps = state => {
     currency: (({ name, sign, value }) => ({ name, sign, value }))(quoteCurrency),
     currenciesList: getCurrenciesList(list),
     isDropdownActive: isQuoteOpen,
-    output: `${parseInt(output, 10) > 0 ? '+' : ''} ${output}`,
+    output: parseOutput(output),
     exchange: {
-      disabled: warning || sending || input === '0',
-      text: sending ? 'Sending...' : 'Exchange'
+      isDisabled: warning || sending || input === '0',
+      text: pickBtnText(sending)
     },
     rate: {
-      rate: state.rates.rate || '0',
+      rate: rates.rate || '0',
       baseSign: baseCurrency.sign,
       quoteSign: quoteCurrency.sign
     }

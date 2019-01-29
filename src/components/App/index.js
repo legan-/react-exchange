@@ -1,4 +1,4 @@
-import './App.css';
-import App from './App';
+import './Container.css';
+import Container from './Container';
 
-export default App;
+export { Container };

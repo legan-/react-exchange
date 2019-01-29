@@ -1,0 +1,9 @@
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.control > * {
+  width: 50%;
+}

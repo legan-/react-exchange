@@ -4,31 +4,31 @@ const rateRanges = {
   USD: {
     GBP: {
       avg: 0.7,
-      int: 0.01,
+      int: 0.001,
     },
     EUR: {
       avg: 0.8,
-      int: 0.01,
+      int: 0.001,
     },
   },
   GBP: {
     USD: {
       avg: 1.3,
-      int: 0.08,
+      int: 0.008,
     },
     EUR: {
       avg: 1.12,
-      int: 0.09,
+      int: 0.009,
     },
   },
   EUR: {
     USD: {
       avg: 1.15,
-      int: 0.08,
+      int: 0.008,
     },
     GBP: {
       avg: 0.89,
-      int: 0.08,
+      int: 0.008,
     },
   },
 };

@@ -1,5 +1,6 @@
 .currency {
   cursor: pointer;
+  margin-bottom: 10px;
   position: relative;
 }
 
@@ -20,7 +21,6 @@
   font-size: 12px;
   font-weight: 300;
   letter-spacing: 0.5px;
-  margin-top: 10px;
 }
 
 .balance.warning {

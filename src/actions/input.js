@@ -2,7 +2,7 @@ import * as actions from './actionCreators';
 import { getCurrency } from '../selectors';
 import { calcAndUpdateOutput } from './output';
 
-const formattedInput = input => {
+const formatInput = input => {
   let value = input.replace(/[-[\]\s()<>{}"'`|/,;:~+=_!?@#£$€%^&*A-Za-zА-Яа-я]/g, '');
 
   const nulls = input.match(/[0]/g);
@@ -13,6 +13,11 @@ const formattedInput = input => {
   const dots = input.match(/[.]/g);
   if (dots && dots.length > 1) {
     value = value.replace(/.$/g, '');
+  }
+
+  const parts = value.split('.');
+  if (parts.length > 1 && parts[1].length > 2) {
+    value = value.slice(0, value.length - 1);
   }
 
   return value || '0';
@@ -29,10 +34,10 @@ export const checkBalance = () => (dispatch, getState) => {
 export const onInputChange = e => (dispatch, getState) => {
   const { warning, input } = getState().currencies;
   const value = e.target.value;
-  const formattedValue = formattedInput(value);
+  const formattedInput = formatInput(value);
 
-  if (!warning || formattedValue < input) {
-    dispatch(actions.updateInput(formattedValue));
+  if (!warning || formattedInput < input) {
+    dispatch(actions.updateInput(formattedInput));
     dispatch(calcAndUpdateOutput());
     dispatch(checkBalance());
   }

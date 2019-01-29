@@ -2,7 +2,7 @@ import React from 'react';
 import * as TYPES from 'prop-types';
 
 Block.propTypes = {
-  type: TYPES.stirng,
+  type: TYPES.string,
   children: TYPES.node.isRequired
 };
 

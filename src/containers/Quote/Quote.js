@@ -101,8 +101,8 @@ const mapStateToProps = ({ currencies, rates }) => {
     },
     rate: {
       rate: rates.rate || '0',
-      baseSign: baseCurrency.sign,
-      quoteSign: quoteCurrency.sign
+      baseSign: baseCurrency.sign || '',
+      quoteSign: quoteCurrency.sign || ''
     }
   };
 };

@@ -27,11 +27,14 @@ export const checkBalance = () => (dispatch, getState) => {
 };
 
 export const onInputChange = e => (dispatch, getState) => {
+  const { warning, input } = getState().currencies;
   const value = e.target.value;
   const formattedValue = formattedInput(value);
 
-  dispatch(actions.updateInput(formattedValue));
-  dispatch(calcAndUpdateOutput());
-  dispatch(checkBalance());
+  if (!warning || formattedValue < input) {
+    dispatch(actions.updateInput(formattedValue));
+    dispatch(calcAndUpdateOutput());
+    dispatch(checkBalance());
+  }
 };
 

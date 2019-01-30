@@ -1,58 +1,58 @@
-import Types from '../constants/ActionTypes';
+import TYPES from '../constants/ActionTypes';
 
 export const receiveCurrencies = () => ({
-  type: Types.RECEIVE_CURRENCIES
+  type: TYPES.RECEIVE_CURRENCIES
 });
 
 export const currenciesReceivedSuccess = currencies => ({
-  type: Types.CURRENCIES_RECEIVED_SUCCESS,
+  type: TYPES.CURRENCIES_RECEIVED_SUCCESS,
   currencies
 });
 
 export const currenciesReceivedFail = () => ({
-  type: Types.CURRENCIES_RECEIVED_FAIL
+  type: TYPES.CURRENCIES_RECEIVED_FAIL
 });
 
 export const ratesReceivedSuccess = (rates, rate) => ({
-  type: Types.RATES_RECEIVED_SUCCESS,
+  type: TYPES.RATES_RECEIVED_SUCCESS,
   rates,
   rate
 });
 
 export const hasFewCurrencies = currencies => ({
-  type: Types.HAS_FEW_CURRENCIES,
+  type: TYPES.HAS_FEW_CURRENCIES,
   currencies
 });
 
 export const setCurrencies = currencies => ({
-  type: Types.SET_CURRENCIES,
+  type: TYPES.SET_CURRENCIES,
   currencies
 });
 
 export const updateInput = input => ({
-  type: Types.UPDATE_INPUT,
+  type: TYPES.UPDATE_INPUT,
   input
 });
 
 export const updateOutput = output => ({
-  type: Types.UPDATE_OUTPUT,
+  type: TYPES.UPDATE_OUTPUT,
   output
 });
 
 export const showBaseDropdown = () => ({
-  type: Types.SHOW_BASE_DROPDOWN
+  type: TYPES.SHOW_BASE_DROPDOWN
 });
 
 export const showQuoteDropdown = () => ({
-  type: Types.SHOW_QUOTE_DROPDOWN
+  type: TYPES.SHOW_QUOTE_DROPDOWN
 });
 
 export const hideDropdown = () => ({
-  type: Types.HIDE_DROPDOWN
+  type: TYPES.HIDE_DROPDOWN
 });
 
 export const changeBaseCurrency = (base, quote, state, time) => ({
-  type: Types.CHANGE_BASE_CURRENCY,
+  type: TYPES.CHANGE_BASE_CURRENCY,
   base,
   quote,
   state,
@@ -60,7 +60,7 @@ export const changeBaseCurrency = (base, quote, state, time) => ({
 });
 
 export const changeQuoteCurrency = (base, quote, state, time) => ({
-  type: Types.CHANGE_QUOTE_CURRENCY,
+  type: TYPES.CHANGE_QUOTE_CURRENCY,
   base,
   quote,
   state,
@@ -68,18 +68,18 @@ export const changeQuoteCurrency = (base, quote, state, time) => ({
 });
 
 export const updateWarning = warning => ({
-  type: Types.UPDATE_WARNING,
+  type: TYPES.UPDATE_WARNING,
   warning
 });
 
 export const exchangeRequest = () => ({
-  type: Types.EXCHANGE_REQUEST
+  type: TYPES.EXCHANGE_REQUEST
 });
 
 export const exchangeSuccess = () => ({
-  type: Types.EXCHANGE_SUCCESS
+  type: TYPES.EXCHANGE_SUCCESS
 });
 
 export const exchangeError = () => ({
-  type: Types.EXCHANGE_ERROR
+  type: TYPES.EXCHANGE_ERROR
 });

@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 
 import initialState from './initialState';
-import Types from '../constants/ActionTypes';
+import TYPES from '../constants/ActionTypes';
 
 const isLoading = (state = initialState.currencies.isLoading, action) => {
   switch (action.type) {
-    case Types.RECEIVE_CURRENCIES:
+    case TYPES.RECEIVE_CURRENCIES:
       return true;
-    case Types.CURRENCIES_RECEIVED_SUCCESS:
-    case Types.CURRENCIES_RECEIVED_FAIL:
+    case TYPES.CURRENCIES_RECEIVED_SUCCESS:
+    case TYPES.CURRENCIES_RECEIVED_FAIL:
       return false;
     default:
       return state;
@@ -17,9 +17,9 @@ const isLoading = (state = initialState.currencies.isLoading, action) => {
 
 const isReceived = (state = initialState.currencies.isReceived, action) => {
   switch (action.type) {
-    case Types.CURRENCIES_RECEIVED_SUCCESS:
+    case TYPES.CURRENCIES_RECEIVED_SUCCESS:
       return true;
-    case Types.CURRENCIES_RECEIVED_FAIL:
+    case TYPES.CURRENCIES_RECEIVED_FAIL:
       return false;
     default:
       return state;
@@ -28,7 +28,7 @@ const isReceived = (state = initialState.currencies.isReceived, action) => {
 
 const list = (state = initialState.currencies.list, action) => {
   switch (action.type) {
-    case Types.CURRENCIES_RECEIVED_SUCCESS:
+    case TYPES.CURRENCIES_RECEIVED_SUCCESS:
       return {
         ...state,
         ...action.currencies.reduce((obj, currency) => {
@@ -43,14 +43,14 @@ const list = (state = initialState.currencies.list, action) => {
 
 const isBaseOpen = (state = initialState.currencies.isBaseOpen, action) => {
   switch (action.type) {
-    case Types.SHOW_BASE_DROPDOWN:
+    case TYPES.SHOW_BASE_DROPDOWN:
       return !state;
-    case Types.HIDE_DROPDOWN:
-    case Types.SHOW_QUOTE_DROPDOWN:
-    case Types.CHANGE_BASE_CURRENCY:
-    case Types.CHANGE_QUOTE_CURRENCY:
-    case Types.EXCHANGE_REQUEST:
-    case Types.UPDATE_INPUT:
+    case TYPES.HIDE_DROPDOWN:
+    case TYPES.SHOW_QUOTE_DROPDOWN:
+    case TYPES.CHANGE_BASE_CURRENCY:
+    case TYPES.CHANGE_QUOTE_CURRENCY:
+    case TYPES.EXCHANGE_REQUEST:
+    case TYPES.UPDATE_INPUT:
       return false;
     default:
       return state;
@@ -59,14 +59,14 @@ const isBaseOpen = (state = initialState.currencies.isBaseOpen, action) => {
 
 const isQuoteOpen = (state = initialState.currencies.isQuoteOpen, action) => {
   switch (action.type) {
-    case Types.SHOW_QUOTE_DROPDOWN:
+    case TYPES.SHOW_QUOTE_DROPDOWN:
       return !state;
-    case Types.HIDE_DROPDOWN:
-    case Types.SHOW_BASE_DROPDOWN:
-    case Types.CHANGE_BASE_CURRENCY:
-    case Types.CHANGE_QUOTE_CURRENCY:
-    case Types.EXCHANGE_REQUEST:
-    case Types.UPDATE_INPUT:
+    case TYPES.HIDE_DROPDOWN:
+    case TYPES.SHOW_BASE_DROPDOWN:
+    case TYPES.CHANGE_BASE_CURRENCY:
+    case TYPES.CHANGE_QUOTE_CURRENCY:
+    case TYPES.EXCHANGE_REQUEST:
+    case TYPES.UPDATE_INPUT:
       return false;
     default:
       return state;
@@ -75,10 +75,10 @@ const isQuoteOpen = (state = initialState.currencies.isQuoteOpen, action) => {
 
 const base = (state = initialState.currencies.base, action) => {
   switch (action.type) {
-    case Types.SET_CURRENCIES:
+    case TYPES.SET_CURRENCIES:
       return action.currencies[0].id;
-    case Types.CHANGE_BASE_CURRENCY:
-    case Types.CHANGE_QUOTE_CURRENCY:
+    case TYPES.CHANGE_BASE_CURRENCY:
+    case TYPES.CHANGE_QUOTE_CURRENCY:
       return action.base.id;
     default:
       return state;
@@ -87,10 +87,10 @@ const base = (state = initialState.currencies.base, action) => {
 
 const quote = (state = initialState.currencies.quote, action) => {
   switch (action.type) {
-    case Types.SET_CURRENCIES:
+    case TYPES.SET_CURRENCIES:
       return action.currencies[1].id;
-    case Types.CHANGE_BASE_CURRENCY:
-    case Types.CHANGE_QUOTE_CURRENCY:
+    case TYPES.CHANGE_BASE_CURRENCY:
+    case TYPES.CHANGE_QUOTE_CURRENCY:
       return action.quote.id;
     default:
       return state;
@@ -99,9 +99,9 @@ const quote = (state = initialState.currencies.quote, action) => {
 
 const input = (state = initialState.currencies.input, action) => {
   switch (action.type) {
-    case Types.UPDATE_INPUT:
+    case TYPES.UPDATE_INPUT:
       return action.input;
-    case Types.EXCHANGE_SUCCESS:
+    case TYPES.EXCHANGE_SUCCESS:
       return initialState.currencies.input;
     default:
       return state;
@@ -110,9 +110,9 @@ const input = (state = initialState.currencies.input, action) => {
 
 const output = (state = initialState.currencies.output, action) => {
   switch (action.type) {
-    case Types.UPDATE_OUTPUT:
+    case TYPES.UPDATE_OUTPUT:
       return action.output;
-    case Types.EXCHANGE_SUCCESS:
+    case TYPES.EXCHANGE_SUCCESS:
       return initialState.currencies.output;
     default:
       return state;
@@ -121,7 +121,7 @@ const output = (state = initialState.currencies.output, action) => {
 
 const hasWarning = (state = initialState.currencies.hasWarning, action) => {
   switch (action.type) {
-    case Types.UPDATE_WARNING:
+    case TYPES.UPDATE_WARNING:
       return action.warning;
     default:
       return state;
@@ -130,9 +130,9 @@ const hasWarning = (state = initialState.currencies.hasWarning, action) => {
 
 const isSending = (state = initialState.currencies.isSending, action) => {
   switch (action.type) {
-    case Types.EXCHANGE_REQUEST:
+    case TYPES.EXCHANGE_REQUEST:
       return true;
-    case Types.EXCHANGE_SUCCESS:
+    case TYPES.EXCHANGE_SUCCESS:
       return false;
     default:
       return state;

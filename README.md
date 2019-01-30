@@ -18,7 +18,7 @@ React/redux based currency converter.
 
 ### Installing
 
-`git@github.com:legan-/react-exchange.git`
+`git clone git@github.com:legan-/react-exchange.git`
 \
 `cd react-exchange`
 \

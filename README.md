@@ -14,9 +14,7 @@ React/redux based currency converter.
 - Webpack
 - npm
 
-## Getting Started
-
-### Installing
+## Installing:
 
 `git clone git@github.com:legan-/react-exchange.git`
 \

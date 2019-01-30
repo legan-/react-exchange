@@ -54,7 +54,7 @@ export default base => ({
   timestamp: new Date().getTime(),
   base,
   rates: Object.keys(rateRanges).reduce(
-    (obj, quote, i) => ({ ...obj, [quote]: rate(base, quote) }),
+    (obj, quote) => ({ ...obj, [quote]: rate(base, quote) }),
     {},
   ),
 });

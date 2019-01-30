@@ -7,7 +7,7 @@ Container.propTypes = {
 };
 
 function Container({ children, isDisplayed }) {
-  const className = `container ${ isDisplayed ? 'show' : 'hide' }`
+  const className = `container ${ isDisplayed ? 'show' : 'hide' }`;
 
   return (
     <div className={ className }>

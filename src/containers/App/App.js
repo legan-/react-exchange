@@ -25,7 +25,7 @@ function App ({ isLoading, isReceived }) {
       { node }
     </Container>
   );
-};
+}
 
 const mapStateToProps = ({ currencies: { isLoading, isReceived } }) => ({
   isLoading,

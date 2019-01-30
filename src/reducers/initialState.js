@@ -9,8 +9,8 @@ export default {
     quote: null,
     input: '0',
     output: 0,
-    warning: false,
-    sending: false
+    hasWarning: false,
+    isSending: false
   },
   rates: {
     rate: null,

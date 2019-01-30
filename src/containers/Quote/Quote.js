@@ -75,7 +75,7 @@ function Quote ({
         onElementClick={ onCurrencyListItemClick }
         onBackgroundClick={ onBackgroundClick }
       />
-      <ExchangeBtn { ...exchange } onClick={ onExchangeClick } />
+      <ExchangeBtn { ...exchange } onClick={ onExchangeClick } />
     </Block>
   );
 }
@@ -84,8 +84,8 @@ const mapStateToProps = ({ currencies, rates }) => {
   const {
     input,
     output,
-    sending,
-    warning,
+    isSending,
+    hasWarning,
     list,
     base,
     quote,
@@ -96,13 +96,13 @@ const mapStateToProps = ({ currencies, rates }) => {
   const quoteCurrency = getCurrency(list, quote);
 
   return {
-    currency: (({ name, sign, value }) => ({ name, sign, value }))(quoteCurrency),
+    currency: (({ name = '', sign = '', value = '' }) => ({ name, sign, value }))(quoteCurrency),
     currenciesList: getCurrenciesList(list),
     isDropdownActive: isQuoteOpen,
     output: parseOutput(output),
     exchange: {
-      isDisabled: warning || sending || input === '0',
-      text: pickBtnText(sending)
+      isDisabled: hasWarning || isSending || input === '0',
+      text: pickBtnText(isSending)
     },
     rate: {
       rate: rates.rate || '0',

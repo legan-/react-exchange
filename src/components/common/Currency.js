@@ -2,19 +2,19 @@ import React from 'react';
 import * as TYPES from 'prop-types';
 
 Currency.propTypes = {
-  name: TYPES.string,
-  sign: TYPES.string,
-  value: TYPES.string,
-  warning: TYPES.bool,
+  name: TYPES.string.isRequired,
+  sign: TYPES.string.isRequired,
+  value: TYPES.string.isRequired,
+  hasWarning: TYPES.bool,
   onClick: TYPES.func.isRequired
 };
 
 Currency.defaultProps = {
-  warning: false
+  hasWarning: false
 };
 
-function Currency({ name, sign, value, warning, onClick }) {
-  const className = `balance ${ warning ? 'warning' : '' }`;
+function Currency({ name, sign, value, hasWarning, onClick }) {
+  const className = `balance ${ hasWarning ? 'warning' : '' }`;
 
   return (
     <div>
@@ -22,11 +22,11 @@ function Currency({ name, sign, value, warning, onClick }) {
         { name }
       </div>
       <div className={ className }>
-        Balance: { sign }
+        { `Balance: ${ sign }` }
         { value }
       </div>
     </div>
   );
-};
+}
 
 export default Currency;

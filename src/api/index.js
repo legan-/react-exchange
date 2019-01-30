@@ -4,13 +4,13 @@ import _rates from './rates';
 const TIMEOUT = 200;
 
 const fetchRates = base =>
-  new Promise((resolve, reject) => setTimeout(() => resolve(_rates(base)), TIMEOUT));
+  new Promise(resolve => setTimeout(() => resolve(_rates(base)), TIMEOUT));
 
 const fetchCurrencies = () =>
-  new Promise((resolve, reject) => setTimeout(() => resolve(_currencies), TIMEOUT));
+  new Promise(resolve => setTimeout(() => resolve(_currencies), TIMEOUT));
 
-const exchange = request =>
-  new Promise((resolve, reject) =>
+const exchange = () =>
+  new Promise(resolve =>
     setTimeout(() => {
       resolve(true);
     }, TIMEOUT * 3)

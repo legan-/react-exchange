@@ -26,7 +26,7 @@ Base.propTypes = {
   currenciesList: TYPES.array.isRequired,
   isDropdownActive: TYPES.bool.isRequired,
   inputValue: TYPES.string.isRequired,
-  warning: TYPES.bool.isRequired,
+  hasWarning: TYPES.bool.isRequired,
   onInputChange: TYPES.func.isRequired,
   onCurrencyClick: TYPES.func.isRequired,
   onCurrencyListItemClick: TYPES.func.isRequired,
@@ -38,7 +38,7 @@ function Base({
   currenciesList,
   isDropdownActive,
   inputValue,
-  warning,
+  hasWarning,
   onInputChange,
   onCurrencyClick,
   onCurrencyListItemClick,
@@ -49,7 +49,7 @@ function Base({
       <Control>
         <Currency
           { ...currency }
-          warning={ warning }
+          hasWarning={ hasWarning }
           onClick={ onCurrencyClick }
         />
         <Input
@@ -66,7 +66,7 @@ function Base({
       />
     </Block>
   );
-};
+}
 
 const mapStateToProps = ({ currencies }) => {
   const {
@@ -74,15 +74,15 @@ const mapStateToProps = ({ currencies }) => {
     base,
     input,
     isBaseOpen,
-    warning
+    hasWarning
   } = currencies;
 
   return {
-    currency: (({ name, sign, value }) => ({ name, sign, value }))(getCurrency(list, base)),
+    currency: (({ name = '', sign = '', value = '' }) => ({ name, sign, value }))(getCurrency(list, base)),
     currenciesList: getCurrenciesList(list),
     isDropdownActive: isBaseOpen,
     inputValue: parseInput(input),
-    warning
+    hasWarning
   };
 };
 

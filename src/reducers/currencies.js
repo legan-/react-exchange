@@ -119,7 +119,7 @@ const output = (state = initialState.currencies.output, action) => {
   }
 };
 
-const warning = (state = initialState.currencies.warning, action) => {
+const hasWarning = (state = initialState.currencies.hasWarning, action) => {
   switch (action.type) {
     case Types.UPDATE_WARNING:
       return action.warning;
@@ -128,7 +128,7 @@ const warning = (state = initialState.currencies.warning, action) => {
   }
 };
 
-const sending = (state = initialState.currencies.sending, action) => {
+const isSending = (state = initialState.currencies.isSending, action) => {
   switch (action.type) {
     case Types.EXCHANGE_REQUEST:
       return true;
@@ -149,6 +149,6 @@ export default combineReducers({
   quote,
   input,
   output,
-  warning,
-  sending
+  hasWarning,
+  isSending
 });

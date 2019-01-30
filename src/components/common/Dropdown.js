@@ -1,7 +1,7 @@
 import React from 'react';
 import * as TYPES from 'prop-types';
 
-import { Flag } from 'semantic-ui-react';
+import Flag from 'react-country-flag';
 
 Dropdown.propTypes = {
   list: TYPES.arrayOf(
@@ -29,12 +29,14 @@ function Dropdown ({
   return isActive && (
     <div className='dropdown' onClick={ onBackgroundClick }>
       <ul>
-        <p>Choose a { type.toLowerCase() } currency:</p>
+        <p>
+          { `Choose a ${ type.toLowerCase() } currency:` }
+        </p>
         {
           list.map(({ id, name, flag, value }) => (
             <li key={ id } onClick={ () => onElementClick(id, type) }>
-              <Flag name={ flag } />
-              { name }: { value }
+              <Flag code={ flag } svg />
+              { `${ name }: ${ value }` }
             </li>
           ))
         }

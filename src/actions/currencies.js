@@ -26,6 +26,7 @@ export const getCurrencies = () => dispatch => {
     })
     .catch(error => {
       dispatch(actions.currenciesReceivedFail());
+      // eslint-disable-next-line no-console
       console.error(error);
     });
 };
@@ -34,12 +35,14 @@ const switchCurrencyBy = (id, type, state) => {
   const { base, quote, list } = state.currencies;
   const time = new Date().getTime();
   switch (type) {
-    case BASE:
-      const t = quote === id ? list[base] : list[quote];
+    case BASE: {
+      const t = (quote === id) ? list[base] : list[quote];
       return actions.changeBaseCurrency(list[id], t, state, time);
-    case QUOTE:
-      const f = base === id ? list[quote] : list[base];
+    }
+    case QUOTE: {
+      const f = (base === id) ? list[quote] : list[base];
       return actions.changeQuoteCurrency(f, list[id], state, time);
+    }
     // no default
   }
 };

@@ -1,5 +1,9 @@
 # React Exchange
 
+[Example](http://react-exchange.surge.sh/)
+
+## Description:
+
 React/redux based currency converter.
 
 ## Tech Stack:
@@ -7,19 +11,18 @@ React/redux based currency converter.
 - ES6
 - React
 - Redux
+- Webpack
 - npm
 
 ## Getting Started
 
 ### Installing
 
-To prepare this app for running you have to:
+`git@github.com:legan-/react-exchange.git`
+\
+`cd react-exchange`
+\
+`yarn`
 
-1. Install **node.js**
-2. `git clone git@github.com:legan-/react-exchange.git`
-3. `cd react-exchange`
-4. `yarn install`
-
-### Running app
-
-`yarn start`
+## Running app:
+`yarn dev:watch` and then go to http://localhost:3000
